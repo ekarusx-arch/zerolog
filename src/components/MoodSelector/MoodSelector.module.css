@@ -1,0 +1,68 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.75rem;
+  margin-bottom: 1.5rem;
+}
+
+.title {
+  font-size: 1rem;
+  color: var(--color-text-secondary);
+  font-weight: 500;
+}
+
+.dotsWrapper {
+  display: flex;
+  gap: 1.5rem;
+  justify-content: center;
+  align-items: center;
+}
+
+.dotButton {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background-color: var(--color-border);
+  transition: all var(--transition-fast);
+  position: relative;
+  /* Glassmorphism effect for unselected */
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.dotButton:hover {
+  transform: scale(1.2);
+  background-color: var(--dot-color);
+  box-shadow: 0 0 15px var(--dot-color);
+  border-color: transparent;
+}
+
+.dotButton.selected {
+  background-color: var(--dot-color);
+  transform: scale(1.3);
+  box-shadow: 0 0 20px var(--dot-color);
+  border-color: transparent;
+}
+
+/* Tooltip pseudo-element */
+.dotButton:hover::after,
+.dotButton.selected::after {
+  content: attr(aria-label);
+  position: absolute;
+  bottom: -30px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 0.75rem;
+  color: var(--color-text-primary);
+  white-space: nowrap;
+  opacity: 0;
+  animation: fadeIn 0.2s forwards;
+  animation-delay: 0.1s;
+}
+
+@keyframes fadeIn {
+  to {
+    opacity: 1;
+  }
+}

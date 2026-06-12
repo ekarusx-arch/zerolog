@@ -73,47 +73,49 @@ const DashboardWidgets = ({ logs }) => {
     <div className={styles.container}>
       <RetrospectiveTopics />
       <h2 className={styles.sectionTitle}>ZeroInsight 대시보드</h2>
-      <div className={styles.widgetCard}>
-        <div className={styles.widgetHeader}>
-          <span className={styles.widgetIcon}>🔥</span>
-          <h3>나의 기록 열정</h3>
+      <div className={styles.widgetsGrid}>
+        <div className={styles.widgetCard}>
+          <div className={styles.widgetHeader}>
+            <span className={styles.widgetIcon}>🔥</span>
+            <h3>나의 기록 열정</h3>
+          </div>
+          <div className={styles.streakContent}>
+            <div className={styles.streakNumber}>{streak}<span>일</span></div>
+            <div className={styles.streakLabel}>연속 기록 중입니다!</div>
+          </div>
         </div>
-        <div className={styles.streakContent}>
-          <div className={styles.streakNumber}>{streak}<span>일</span></div>
-          <div className={styles.streakLabel}>연속 기록 중입니다!</div>
-        </div>
-      </div>
 
-      <div className={styles.widgetCard}>
-        <div className={styles.widgetHeader}>
-          <span className={styles.widgetIcon}>📊</span>
-          <h3>이번 달 기분 요약</h3>
-        </div>
-        <div className={styles.moodContent}>
-          {thisMonthLogs.length === 0 ? (
-            <div className={styles.emptyMood}>아직 이번 달 기록이 없습니다.</div>
-          ) : (
-            <div className={styles.moodBars}>
-              {Object.keys(moodCounts).map(mood => {
-                const count = moodCounts[mood];
-                const percentage = Math.max((count / thisMonthLogs.length) * 100, count > 0 ? 5 : 0);
-                if (count === 0) return null;
-                
-                return (
-                  <div key={mood} className={styles.moodRow}>
-                    <span className={styles.moodEmoji}>{MOOD_EMOJIS[mood]}</span>
-                    <div className={styles.barContainer}>
-                      <div 
-                        className={styles.barFill} 
-                        style={{ width: `${percentage}%`, backgroundColor: MOOD_COLORS[mood] }}
-                      ></div>
+        <div className={styles.widgetCard}>
+          <div className={styles.widgetHeader}>
+            <span className={styles.widgetIcon}>📊</span>
+            <h3>이번 달 기분 요약</h3>
+          </div>
+          <div className={styles.moodContent}>
+            {thisMonthLogs.length === 0 ? (
+              <div className={styles.emptyMood}>아직 이번 달 기록이 없습니다.</div>
+            ) : (
+              <div className={styles.moodBars}>
+                {Object.keys(moodCounts).map(mood => {
+                  const count = moodCounts[mood];
+                  const percentage = Math.max((count / thisMonthLogs.length) * 100, count > 0 ? 5 : 0);
+                  if (count === 0) return null;
+                  
+                  return (
+                    <div key={mood} className={styles.moodRow}>
+                      <span className={styles.moodEmoji}>{MOOD_EMOJIS[mood]}</span>
+                      <div className={styles.barContainer}>
+                        <div 
+                          className={styles.barFill} 
+                          style={{ width: `${percentage}%`, backgroundColor: MOOD_COLORS[mood] }}
+                        ></div>
+                      </div>
+                      <span className={styles.moodCount}>{count}일</span>
                     </div>
-                    <span className={styles.moodCount}>{count}일</span>
-                  </div>
-                );
-              })}
-            </div>
-          )}
+                  );
+                })}
+              </div>
+            )}
+          </div>
         </div>
       </div>
     </div>

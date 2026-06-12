@@ -1,13 +1,8 @@
 .container {
-  background: linear-gradient(135deg, rgba(30, 41, 59, 0.6), rgba(15, 23, 42, 0.4));
-  backdrop-filter: blur(24px);
-  -webkit-backdrop-filter: blur(24px);
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  box-shadow: 
-    inset 0 1px 0 rgba(255, 255, 255, 0.1),
-    0 10px 40px -10px rgba(0, 0, 0, 0.3),
-    0 0 0 1px rgba(0, 0, 0, 0.2);
-  border-radius: 24px;
+  background: var(--color-bg-surface);
+  border: 1px solid var(--color-border);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.04);
+  border-radius: 20px;
   padding: 1.5rem;
   display: flex;
   flex-direction: column;
@@ -30,8 +25,8 @@
 }
 
 .navButton {
-  background: rgba(255, 255, 255, 0.05);
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  background: #f8fafc;
+  border: 1px solid var(--color-border);
   color: var(--color-text-secondary);
   width: 32px;
   height: 32px;
@@ -44,7 +39,7 @@
 }
 
 .navButton:hover {
-  background: rgba(255, 255, 255, 0.1);
+  background: #e2e8f0;
   color: var(--color-text-primary);
   transform: translateY(-1px);
 }
@@ -97,7 +92,7 @@
   transform: translate(-50%, -50%);
   width: 100%;
   height: 100%;
-  border: 2px solid rgba(255, 255, 255, 0.2);
+  border: 2px solid #e2e8f0;
   border-radius: 50%;
   z-index: -1;
 }
@@ -110,19 +105,19 @@
   width: 100%;
   height: 100%;
   border-radius: 50%;
-  opacity: 0.3;
-  z-index: -1;
+  opacity: 0.15;
+  z-index: 0;
   transition: all var(--transition-fast);
-  filter: blur(2px);
+  filter: blur(0px);
 }
 
 .dateCell:hover .moodDot {
-  opacity: 0.6;
-  filter: blur(4px);
+  opacity: 0.3;
+  filter: blur(2px);
   transform: translate(-50%, -50%) scale(1.2);
 }
 
 .dateCell:hover {
   transform: scale(1.1);
-  color: #fff;
+  color: var(--color-text-primary);
 }

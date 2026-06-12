@@ -1,0 +1,124 @@
+.container {
+  display: flex;
+  gap: 1.25rem;
+  width: 100%;
+}
+
+.widgetCard {
+  flex: 1;
+  background: var(--color-bg-surface);
+  border-radius: 20px;
+  padding: 1.5rem;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.04);
+  border: 1px solid var(--color-border);
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.widgetCard:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.08);
+}
+
+.widgetHeader {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.widgetIcon {
+  font-size: 1.2rem;
+}
+
+.widgetHeader h3 {
+  margin: 0;
+  font-size: 1rem;
+  color: var(--color-text-secondary);
+  font-weight: 600;
+}
+
+.streakContent {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+  flex: 1;
+}
+
+.streakNumber {
+  font-size: 3rem;
+  font-weight: 700;
+  color: #3b82f6; /* ZeroSlate Blue */
+  line-height: 1;
+  background: linear-gradient(135deg, #3b82f6, #8b5cf6);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.streakNumber span {
+  font-size: 1.2rem;
+  font-weight: 500;
+  color: var(--color-text-secondary);
+  -webkit-text-fill-color: var(--color-text-secondary);
+  margin-left: 0.2rem;
+}
+
+.streakLabel {
+  color: var(--color-text-primary);
+  font-size: 0.95rem;
+  font-weight: 500;
+  margin-top: 0.5rem;
+}
+
+.moodContent {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.emptyMood {
+  color: var(--color-text-secondary);
+  font-size: 0.9rem;
+  text-align: center;
+}
+
+.moodBars {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+}
+
+.moodRow {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.moodEmoji {
+  font-size: 1.1rem;
+}
+
+.barContainer {
+  flex: 1;
+  height: 8px;
+  background: #f1f5f9;
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.barFill {
+  height: 100%;
+  border-radius: 4px;
+  transition: width 1s ease-out;
+}
+
+.moodCount {
+  font-size: 0.85rem;
+  color: var(--color-text-secondary);
+  font-weight: 600;
+  min-width: 30px;
+  text-align: right;
+}

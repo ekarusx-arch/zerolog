@@ -4,6 +4,7 @@ import ChatReflection from './components/ChatReflection/ChatReflection'
 import DotCalendar from './components/DotCalendar/DotCalendar'
 import MonthlyCalendar from './components/MonthlyCalendar/MonthlyCalendar'
 import DayView from './components/DayView/DayView'
+import DashboardWidgets from './components/DashboardWidgets/DashboardWidgets'
 import AuthScreen from './components/AuthScreen/AuthScreen'
 import { supabase } from './lib/supabaseClient'
 
@@ -123,10 +124,8 @@ function App() {
           }}>
             <h1 style={{ 
               fontSize: '1.5rem', 
-              fontWeight: 600, 
-              background: 'linear-gradient(135deg, #fff, #94a3b8)',
-              WebkitBackgroundClip: 'text',
-              WebkitTextFillColor: 'transparent',
+              fontWeight: 700, 
+              color: '#3b82f6',
               letterSpacing: '-0.03em'
             }}>
               ZeroLog ✨
@@ -134,14 +133,16 @@ function App() {
             <button 
               onClick={handleLogout}
               style={{
-                background: 'rgba(255, 255, 255, 0.05)',
-                border: '1px solid rgba(255, 255, 255, 0.1)',
+                background: '#ffffff',
+                border: '1px solid #e2e8f0',
                 padding: '0.4rem 1rem',
                 borderRadius: '20px',
-                color: 'var(--color-text-secondary)',
+                color: '#64748b',
                 fontSize: '0.85rem',
                 cursor: 'pointer',
-                transition: 'all var(--transition-fast)'
+                fontWeight: 500,
+                boxShadow: '0 2px 10px rgba(0,0,0,0.02)',
+                transition: 'all 0.2s ease'
               }}
             >
               로그아웃
@@ -177,8 +178,9 @@ function App() {
                 <div style={{ display: 'flex', flexDirection: 'column', height: '100%', minHeight: 0 }}>
                   <ChatReflection onAddLog={handleAddLog} user={session.user} />
                 </div>
-                {/* 2열: 달력 */}
-                <div style={{ display: 'flex', flexDirection: 'column', height: '100%', minHeight: 0 }}>
+                {/* 2열: 위젯 및 달력 */}
+                <div style={{ display: 'flex', flexDirection: 'column', height: '100%', minHeight: 0, gap: '1.5rem' }}>
+                  <DashboardWidgets logs={logs} />
                   <MonthlyCalendar logs={logs} onDateClick={setSelectedDate} />
                 </div>
               </>

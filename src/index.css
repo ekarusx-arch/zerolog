@@ -1,12 +1,12 @@
 @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600&display=swap');
 
 :root {
-  /* Color Palette - Dark Mode */
-  --color-bg-base: #0f172a;
-  --color-bg-surface: #1e293b;
-  --color-text-primary: #f8fafc;
-  --color-text-secondary: #94a3b8;
-  --color-border: #334155;
+  /* Color Palette - Light Mode (ZeroSlate Style) */
+  --color-bg-base: #eef2f6;
+  --color-bg-surface: #ffffff;
+  --color-text-primary: #1e293b;
+  --color-text-secondary: #64748b;
+  --color-border: #e2e8f0;
   
   /* Mood Colors */
   --color-mood-great: #10b981; /* Emerald */
@@ -34,42 +34,13 @@
 body {
   font-family: var(--font-family-base);
   background-color: var(--color-bg-base);
-  
-  /* Interactive Mouse-tracking Aura Background + Noise Overlay + Flowing Animation */
-  background: 
-    radial-gradient(
-      circle 250px at var(--mouse-x, 50%) var(--mouse-y, 50%), 
-      var(--aura-color, rgba(30, 41, 59, 0.5)), 
-      transparent 80%
-    ),
-    url('data:image/svg+xml;utf8,%3Csvg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg"%3E%3Cfilter id="noiseFilter"%3E%3CfeTurbulence type="fractalNoise" baseFrequency="0.65" numOctaves="3" stitchTiles="stitch"/%3E%3C/filter%3E%3Crect width="100%25" height="100%25" filter="url(%23noiseFilter)" opacity="0.05"/%3E%3C/svg%3E'),
-    linear-gradient(
-      120deg, 
-      var(--color-bg-base) 0%, 
-      var(--aura-color, #1e293b) 40%, 
-      var(--color-bg-base) 100%
-    );
-  background-size: 100% 100%, 100% 100%, 200% 200%;
-  animation: auroraFlow 20s ease infinite;
-  background-attachment: fixed;
-  background-blend-mode: screen, color-dodge, normal;
-  
+  background-image: 
+    radial-gradient(circle at 15% 50%, rgba(59, 130, 246, 0.04), transparent 50%),
+    radial-gradient(circle at 85% 30%, rgba(16, 185, 129, 0.04), transparent 50%);
   color: var(--color-text-primary);
   line-height: 1.6;
   min-height: 100vh;
   -webkit-font-smoothing: antialiased;
-}
-
-@keyframes auroraFlow {
-  0% {
-    background-position: 0% 0%, 0% 0%, 0% 50%;
-  }
-  50% {
-    background-position: 0% 0%, 0% 0%, 100% 50%;
-  }
-  100% {
-    background-position: 0% 0%, 0% 0%, 0% 50%;
-  }
 }
 
 

@@ -2,7 +2,6 @@ import React, { useState, useEffect, useRef } from 'react';
 import styles from './ChatReflection.module.css';
 import { GoogleGenerativeAI } from '@google/generative-ai';
 import { supabase } from '../../lib/supabaseClient';
-import SoundtrackInput from '../SoundtrackInput/SoundtrackInput';
 
 const SYSTEM_INSTRUCTION = `
 당신은 다정하고 공감 능력이 뛰어난 일기 도우미 '제로(Zero)'입니다.
@@ -29,7 +28,6 @@ const ChatReflection = ({ onAddLog, user }) => {
   const [isTyping, setIsTyping] = useState(false);
   const [chatSession, setChatSession] = useState(null);
   const [apiKeyError, setApiKeyError] = useState(false);
-  const [soundtrack, setSoundtrack] = useState('');
   const [isFinished, setIsFinished] = useState(false);
   
   const messagesEndRef = useRef(null);
@@ -99,9 +97,15 @@ const ChatReflection = ({ onAddLog, user }) => {
     try {
       // Create a specific prompt to summarize
       const result = await chatSession.sendMessage(SUMMARY_PROMPT);
-      const summaryText = result.response.text().replace(/```json/g, '').replace(/```/g, '').trim();
+      const responseText = result.response.text();
       
-      const summaryData = JSON.parse(summaryText);
+      // Extract JSON using regex in case the model adds extra text
+      const jsonMatch = responseText.match(/\{[\s\S]*\}/);
+      if (!jsonMatch) {
+        throw new Error("Failed to find JSON in response: " + responseText);
+      }
+      
+      const summaryData = JSON.parse(jsonMatch[0]);
 
       const newLogData = {
         user_id: user.id,
@@ -110,7 +114,7 @@ const ChatReflection = ({ onAddLog, user }) => {
         q1: summaryData.q1 || '기록 없음',
         q2: summaryData.q2 || '기록 없음',
         q3: summaryData.q3 || '기록 없음',
-        soundtrack: soundtrack || null
+        soundtrack: null
       };
 
       const { data, error } = await supabase
@@ -180,7 +184,6 @@ const ChatReflection = ({ onAddLog, user }) => {
       </div>
 
       <div className={styles.inputArea}>
-        <SoundtrackInput soundtrack={soundtrack} setSoundtrack={setSoundtrack} />
         <form onSubmit={handleSendMessage} className={styles.form}>
           <input
             type="text"

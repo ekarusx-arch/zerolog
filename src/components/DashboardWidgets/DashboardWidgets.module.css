@@ -68,17 +68,13 @@
 /* Row layouts */
 .streakCard { grid-column: span 1; }
 .bestMomentCard { grid-column: span 1; }
-
-.whisperCard { grid-column: span 2; }
-.trendCard { grid-column: span 2; }
-
 .doughnutCard { grid-column: span 1; }
 .heatmapCard { grid-column: span 1; }
 
 /* Mobile fallback */
 @media (max-width: 1024px) {
   .widgetsGrid { grid-template-columns: 1fr; }
-  .streakCard, .bestMomentCard, .whisperCard, .trendCard, .doughnutCard, .heatmapCard { grid-column: span 1; }
+  .streakCard, .bestMomentCard, .doughnutCard, .heatmapCard { grid-column: span 1; }
 }
 
 @media (max-width: 768px) {
@@ -91,11 +87,6 @@
 .streakNumber span { font-size: 1rem; font-weight: 600; margin-left: 0.2rem; -webkit-text-fill-color: var(--color-text-secondary); }
 .streakLabel { color: var(--color-text-primary); font-size: 0.9rem; font-weight: 600; margin-top: 0.4rem; }
 
-/* Whisper */
-.whisperContent { flex: 1; display: flex; align-items: center; gap: 0.8rem; background: var(--color-bg); padding: 0.8rem; border-radius: 12px; border: 1px solid var(--color-border); }
-.zeroAvatar { width: 36px; height: 36px; border-radius: 50%; background: linear-gradient(135deg, #a855f7, #ec4899); display: flex; align-items: center; justify-content: center; color: white; font-weight: bold; font-size: 1rem; flex-shrink: 0; box-shadow: 0 4px 10px rgba(168, 85, 247, 0.3); }
-.whisperText { margin: 0; font-size: 0.85rem; color: var(--color-text-primary); line-height: 1.4; font-weight: 600; font-style: italic; }
-
 /* Best Moment */
 .bestMomentContent { flex: 1; display: flex; flex-direction: column; justify-content: center; background: linear-gradient(135deg, rgba(255,255,255,0.4), rgba(255,255,255,0.1)); padding: 0.8rem; border-radius: 12px; border: 1px solid var(--color-border); }
 .bestMomentDate { font-size: 0.75rem; color: var(--color-text-secondary); margin-bottom: 0.4rem; font-weight: 600; display: flex; align-items: center; gap: 0.4rem; }
@@ -103,13 +94,6 @@
 
 /* Empty state */
 .emptyText { color: var(--color-text-secondary); font-size: 0.85rem; text-align: center; margin: auto; }
-
-/* Trend */
-.trendContent { flex: 1; display: flex; align-items: flex-end; justify-content: space-between; height: 80px; padding: 0 0.2rem; gap: 0.2rem; }
-.trendBarContainer { display: flex; flex-direction: column; align-items: center; gap: 0.4rem; flex: 1; }
-.trendBarFillWrapper { width: 100%; max-width: 16px; height: 60px; background: var(--color-border); border-radius: 8px; display: flex; align-items: flex-end; overflow: hidden; }
-.trendBarFill { width: 100%; border-radius: 8px; transition: height 1s cubic-bezier(0.4, 0, 0.2, 1); box-shadow: inset 0 2px 4px rgba(255,255,255,0.3); }
-.trendLabel { font-size: 0.7rem; color: var(--color-text-secondary); font-weight: 600; }
 
 /* Doughnut */
 .doughnutContent { flex: 1; display: flex; flex-direction: column; justify-content: center; align-items: center; }

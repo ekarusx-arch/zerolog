@@ -203,17 +203,6 @@ export default function DashboardWidgets({ logs }) {
           </div>
         </div>
 
-        <div className={`${styles.widgetCard} ${styles.whisperCard}`}>
-          <div className={styles.widgetHeader}>
-            <span className={styles.widgetIcon}>💡</span>
-            <h3>제로의 한마디</h3>
-          </div>
-          <div className={styles.whisperContent}>
-            <div className={styles.zeroAvatar}>Z</div>
-            <p className={styles.whisperText}>"{zerosWhisper}"</p>
-          </div>
-        </div>
-
         <div className={`${styles.widgetCard} ${styles.bestMomentCard}`}>
           <div className={styles.widgetHeader}>
             <span className={styles.widgetIcon}>🌟</span>
@@ -233,30 +222,6 @@ export default function DashboardWidgets({ logs }) {
             ) : (
               <div className={styles.emptyText}>아직 멋진 순간을 기다리고 있어요!</div>
             )}
-          </div>
-        </div>
-
-        {/* Row 2: Mood Trend, Mood Doughnut */}
-        <div className={`${styles.widgetCard} ${styles.trendCard}`}>
-          <div className={styles.widgetHeader}>
-            <span className={styles.widgetIcon}>📈</span>
-            <h3>감정 흐름 (최근 7일)</h3>
-          </div>
-          <div className={styles.trendContent}>
-            {trendDays.map((day, idx) => (
-              <div key={idx} className={styles.trendBarContainer}>
-                <div className={styles.trendBarFillWrapper}>
-                  <div 
-                    className={styles.trendBarFill} 
-                    style={{ 
-                      height: `${day.value > 0 ? (day.value / 5) * 100 : 0}%`, 
-                      backgroundColor: day.color 
-                    }}
-                  ></div>
-                </div>
-                <span className={styles.trendLabel}>{day.label}</span>
-              </div>
-            ))}
           </div>
         </div>
 

@@ -1,0 +1,34 @@
+.playerContainer {
+  width: 100%;
+  border-radius: 12px;
+  overflow: hidden;
+  background: rgba(15, 23, 42, 0.4);
+  margin: 0.5rem 0;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.iframe {
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  border: none;
+  display: block;
+}
+
+.iframeSpotify {
+  width: 100%;
+  height: 152px; /* Spotify compact player height */
+  border: none;
+  display: block;
+}
+
+.soundtrackBlock {
+  font-size: 0.9rem;
+  color: var(--color-text-secondary);
+  background: rgba(15, 23, 42, 0.4);
+  padding: 0.6rem 1rem;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  border: 1px solid rgba(255, 255, 255, 0.05);
+}

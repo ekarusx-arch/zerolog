@@ -11,7 +11,7 @@ const MOOD_COLORS = {
 
 const DAY_NAMES = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
 
-export default function MonthlyCalendar({ logs }) {
+export default function MonthlyCalendar({ logs, onDateClick }) {
   const [currentDate, setCurrentDate] = useState(new Date());
 
   const getDaysInMonth = (year, month) => {
@@ -71,7 +71,13 @@ export default function MonthlyCalendar({ logs }) {
       const logForDay = logsByDate[dateStr];
 
       cells.push(
-        <div key={day} className={`${styles.dateCell} ${isToday(day) ? styles.today : ''}`} title={logForDay ? `기분: ${logForDay.mood}` : ''}>
+        <div 
+          key={day} 
+          className={`${styles.dateCell} ${isToday(day) ? styles.today : ''}`} 
+          title={logForDay ? `기분: ${logForDay.mood}` : ''}
+          onClick={() => onDateClick && onDateClick(dateStr)}
+          style={{ cursor: 'pointer' }}
+        >
           {logForDay && (
             <div 
               className={styles.moodDot} 

@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import styles from './DotCalendar.module.css';
 import { supabase } from '../../lib/supabaseClient';
+import SoundtrackPlayer from '../SoundtrackPlayer/SoundtrackPlayer';
 
 const MOOD_COLORS = {
   great: 'var(--color-mood-great)',
@@ -10,7 +11,7 @@ const MOOD_COLORS = {
   awful: 'var(--color-mood-awful)',
 };
 
-const DotCalendar = ({ logs, onDeleteLog, user }) => {
+const DotCalendar = ({ logs, onDeleteLog, user, onDateClick }) => {
   const [expandedId, setExpandedId] = useState(null);
   const [exportingId, setExportingId] = useState(null);
 
@@ -68,7 +69,7 @@ const DotCalendar = ({ logs, onDeleteLog, user }) => {
         {logs.map((log) => (
           <div key={log.id} className={styles.logItem}>
             <div className={styles.logHeader}>
-              <div className={styles.dateAndDot} onClick={() => toggleExpand(log.id)}>
+              <div className={styles.dateAndDot} onClick={() => onDateClick ? onDateClick(log.date.split('T')[0]) : toggleExpand(log.id)} style={{ cursor: onDateClick ? 'pointer' : 'default' }}>
                 <div 
                   className={styles.moodDot} 
                   style={{ backgroundColor: MOOD_COLORS[log.mood] }} 
@@ -96,11 +97,7 @@ const DotCalendar = ({ logs, onDeleteLog, user }) => {
             </div>
             
             <div className={`${styles.logContent} ${expandedId === log.id ? styles.expanded : ''}`}>
-              {log.soundtrack && (
-                <div className={styles.soundtrackBlock}>
-                  <span role="img" aria-label="headphones">🎧</span> <strong>사운드트랙:</strong> {log.soundtrack}
-                </div>
-              )}
+              <SoundtrackPlayer soundtrack={log.soundtrack} />
               <div className={styles.qnaBlock}>
                 <strong>감사했던 일</strong>
                 <p>{log.q1}</p>

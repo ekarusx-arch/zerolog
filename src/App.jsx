@@ -3,6 +3,7 @@ import Layout from './components/Layout/Layout'
 import ReflectionForm from './components/ReflectionForm/ReflectionForm'
 import DotCalendar from './components/DotCalendar/DotCalendar'
 import MonthlyCalendar from './components/MonthlyCalendar/MonthlyCalendar'
+import DayView from './components/DayView/DayView'
 import AuthScreen from './components/AuthScreen/AuthScreen'
 import { supabase } from './lib/supabaseClient'
 
@@ -10,6 +11,7 @@ function App() {
   const [session, setSession] = useState(null)
   const [logs, setLogs] = useState([])
   const [loading, setLoading] = useState(true)
+  const [selectedDate, setSelectedDate] = useState(null)
 
   // Auth Listener
   useEffect(() => {
@@ -127,7 +129,7 @@ function App() {
               WebkitTextFillColor: 'transparent',
               letterSpacing: '-0.03em'
             }}>
-              ZeroLog
+              ZeroLog ✨
             </h1>
             <button 
               onClick={handleLogout}
@@ -148,7 +150,8 @@ function App() {
           
           <main style={{ 
             display: 'grid', 
-            gridTemplateColumns: 'minmax(300px, 1.2fr) minmax(280px, 1fr) minmax(300px, 1.2fr)',
+            gridTemplateColumns: selectedDate ? 'minmax(400px, 800px)' : 'minmax(300px, 1fr) minmax(300px, 1fr)',
+            justifyContent: selectedDate ? 'center' : 'stretch',
             gridTemplateRows: 'minmax(0, 1fr)',
             gap: '1.5rem',
             flex: 1,
@@ -157,19 +160,24 @@ function App() {
           }}>
             {loading ? (
               <div style={{ textAlign: 'center', color: 'var(--color-text-secondary)', padding: '2rem', gridColumn: '1 / -1' }}>기록을 불러오는 중...</div>
+            ) : selectedDate ? (
+              <DayView 
+                selectedDate={selectedDate} 
+                log={logs.find(l => l.date.startsWith(selectedDate))} 
+                onBack={() => setSelectedDate(null)}
+                onAddLog={(newLog) => {
+                  handleAddLog(newLog);
+                  // Stay on DayView, which will now display the added log
+                }}
+                user={session.user}
+              />
             ) : (
               <>
-                {/* 1열: 일기 쓰기 폼 */}
                 <div style={{ display: 'flex', flexDirection: 'column', height: '100%', minHeight: 0 }}>
-                  <ReflectionForm onAddLog={handleAddLog} user={session.user} />
+                  <MonthlyCalendar logs={logs} onDateClick={setSelectedDate} />
                 </div>
-                {/* 2열: 기분 달력 */}
                 <div style={{ display: 'flex', flexDirection: 'column', height: '100%', minHeight: 0 }}>
-                  <MonthlyCalendar logs={logs} />
-                </div>
-                {/* 3열: 과거 기록 타임라인 */}
-                <div style={{ display: 'flex', flexDirection: 'column', height: '100%', minHeight: 0 }}>
-                  <DotCalendar logs={logs} onDeleteLog={handleDeleteLog} user={session.user} />
+                  <DotCalendar logs={logs} onDeleteLog={handleDeleteLog} user={session.user} onDateClick={setSelectedDate} />
                 </div>
               </>
             )}

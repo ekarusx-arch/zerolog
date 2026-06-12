@@ -14,6 +14,9 @@ const SoundtrackInput = ({ soundtrack, setSoundtrack }) => {
         value={soundtrack}
         onChange={(e) => setSoundtrack(e.target.value)}
       />
+      <div className={styles.hint}>
+        유튜브나 스포티파이 링크를 입력하면 플레이어가 생성됩니다.
+      </div>
     </div>
   );
 };

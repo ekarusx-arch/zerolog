@@ -4,7 +4,7 @@ import MoodSelector from '../MoodSelector/MoodSelector';
 import SoundtrackInput from '../SoundtrackInput/SoundtrackInput';
 import { supabase } from '../../lib/supabaseClient';
 
-const ReflectionForm = ({ onAddLog, user }) => {
+const ReflectionForm = ({ onAddLog, user, overrideDate }) => {
   const [mood, setMood] = useState(null);
   const [q1, setQ1] = useState('');
   const [q2, setQ2] = useState('');
@@ -88,7 +88,7 @@ const ReflectionForm = ({ onAddLog, user }) => {
     setTimeout(async () => {
       const newLogData = {
         user_id: user.id,
-        date: new Date().toISOString(),
+        date: overrideDate ? new Date(overrideDate).toISOString() : new Date().toISOString(),
         mood,
         q1,
         q2,

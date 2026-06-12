@@ -102,7 +102,7 @@ const DashboardWidgets = ({ logs }) => {
                     <div className={styles.barContainer}>
                       <div 
                         className={styles.barFill} 
-                        style={{ width: \`\${percentage}%\`, backgroundColor: MOOD_COLORS[mood] }}
+                        style={{ width: `${percentage}%`, backgroundColor: MOOD_COLORS[mood] }}
                       ></div>
                     </div>
                     <span className={styles.moodCount}>{count}일</span>

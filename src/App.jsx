@@ -5,6 +5,7 @@ import DayView from './components/DayView/DayView'
 import DashboardWidgets from './components/DashboardWidgets/DashboardWidgets'
 import CalendarView from './components/CalendarView/CalendarView'
 import AuthScreen from './components/AuthScreen/AuthScreen'
+import BackgroundSelector from './components/BackgroundSelector/BackgroundSelector'
 import { supabase } from './lib/supabaseClient'
 
 function App() {
@@ -14,6 +15,15 @@ function App() {
   const [selectedDate, setSelectedDate] = useState(null)
   const [currentTab, setCurrentTab] = useState('write') // 'write' or 'calendar'
   const [calendarViewMode, setCalendarViewMode] = useState('monthly')
+  const [bgTheme, setBgTheme] = useState(() => {
+    return localStorage.getItem('zerolog_bg_theme') || 'default';
+  });
+
+  // Apply Background Theme
+  useEffect(() => {
+    document.body.setAttribute('data-theme', bgTheme);
+    localStorage.setItem('zerolog_bg_theme', bgTheme);
+  }, [bgTheme]);
 
   // Auth Listener
   useEffect(() => {
@@ -171,23 +181,26 @@ function App() {
                 </div>
               )}
             </div>
-            <button 
-              onClick={handleLogout}
-              style={{
-                background: '#ffffff',
-                border: '1px solid #e2e8f0',
-                padding: '0.4rem 1rem',
-                borderRadius: '20px',
-                color: '#64748b',
-                fontSize: '0.85rem',
-                cursor: 'pointer',
-                fontWeight: 500,
-                boxShadow: '0 2px 10px rgba(0,0,0,0.02)',
-                transition: 'all 0.2s ease'
-              }}
-            >
-              로그아웃
-            </button>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
+              <BackgroundSelector currentTheme={bgTheme} onThemeChange={setBgTheme} />
+              <button 
+                onClick={handleLogout}
+                style={{
+                  background: '#ffffff',
+                  border: '1px solid #e2e8f0',
+                  padding: '0.4rem 1rem',
+                  borderRadius: '20px',
+                  color: '#64748b',
+                  fontSize: '0.85rem',
+                  cursor: 'pointer',
+                  fontWeight: 500,
+                  boxShadow: '0 2px 10px rgba(0,0,0,0.02)',
+                  transition: 'all 0.2s ease'
+                }}
+              >
+                로그아웃
+              </button>
+            </div>
           </header>
           
           <main style={{ 

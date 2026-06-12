@@ -34,13 +34,58 @@
 body {
   font-family: var(--font-family-base);
   background-color: var(--color-bg-base);
-  background-image: 
-    radial-gradient(circle at 15% 50%, rgba(59, 130, 246, 0.04), transparent 50%),
-    radial-gradient(circle at 85% 30%, rgba(16, 185, 129, 0.04), transparent 50%);
   color: var(--color-text-primary);
   line-height: 1.6;
   min-height: 100vh;
   -webkit-font-smoothing: antialiased;
+  transition: background-color 0.8s ease;
+}
+
+/* 1. Default Theme */
+body[data-theme='default'] {
+  background-color: #eef2f6;
+  background-image: 
+    radial-gradient(circle at 15% 50%, rgba(59, 130, 246, 0.04), transparent 50%),
+    radial-gradient(circle at 85% 30%, rgba(16, 185, 129, 0.04), transparent 50%);
+}
+
+/* 2. Aurora Theme */
+body[data-theme='aurora'] {
+  background: linear-gradient(-45deg, #f0f9ff, #e0e7ff, #f3e8ff, #f0fdf4);
+  background-size: 400% 400%;
+  animation: bgMove 20s ease infinite;
+}
+
+/* 3. Sunset Theme */
+body[data-theme='sunset'] {
+  background: linear-gradient(-45deg, #fff1f2, #ffe4e6, #fce7f3, #fdf4ff);
+  background-size: 400% 400%;
+  animation: bgMove 20s ease infinite;
+}
+
+/* 4. Ocean Theme */
+body[data-theme='ocean'] {
+  background: linear-gradient(-45deg, #f0fdfa, #ccfbf1, #e0f2fe, #dbeafe);
+  background-size: 400% 400%;
+  animation: bgMove 20s ease infinite;
+}
+
+/* 5. Nature Theme */
+body[data-theme='nature'] {
+  background: linear-gradient(-45deg, #f0fdf4, #dcfce7, #fefce8, #f8fafc);
+  background-size: 400% 400%;
+  animation: bgMove 20s ease infinite;
+}
+
+/* 6. Minimal Theme */
+body[data-theme='minimal'] {
+  background: #f8fafc;
+}
+
+@keyframes bgMove {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
 }
 
 

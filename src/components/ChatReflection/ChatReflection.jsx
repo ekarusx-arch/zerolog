@@ -13,13 +13,14 @@ const SYSTEM_INSTRUCTION = `
 `;
 
 const SUMMARY_PROMPT = `
-위 대화 내용을 바탕으로 다음 JSON 형식에 맞게 요약해주세요. JSON 외의 다른 텍스트는 절대 출력하지 마세요.
+위 대화 내용을 바탕으로 다음 JSON 형식에 맞게 요약해주세요. JSON 외의 마크다운(```), 다른 텍스트, 주석(//)은 절대 출력하지 마세요. 오직 순수한 JSON만 출력하세요.
 {
-  "mood": "great", // great, good, okay, bad, awful 중 하나로 감정 상태 유추
+  "mood": "great",
   "q1": "오늘 가장 감사했던 일 (대화에서 추출하거나 없으면 '특별히 언급되지 않았지만 평온한 하루를 보냈습니다.' 등으로 작성)",
   "q2": "오늘 아쉬웠거나 배운 점 (대화에서 추출)",
   "q3": "내일을 위해 비워내야 할 생각 (대화에서 추출)"
 }
+* 주의: mood는 반드시 great, good, okay, bad, awful 중 하나만 입력하세요.
 `;
 
 const ChatReflection = ({ onAddLog, user }) => {

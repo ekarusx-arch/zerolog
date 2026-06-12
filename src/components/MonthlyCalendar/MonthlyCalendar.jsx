@@ -2,11 +2,11 @@ import React, { useState } from 'react';
 import styles from './MonthlyCalendar.module.css';
 
 const MOOD_COLORS = {
-  great: 'var(--color-mood-great)',
-  good: 'var(--color-mood-good)',
-  okay: 'var(--color-mood-okay)',
-  bad: 'var(--color-mood-bad)',
-  awful: 'var(--color-mood-awful)',
+  great: '#10b981',
+  good: '#3b82f6',
+  okay: '#f59e0b',
+  bad: '#ef4444',
+  awful: '#8b5cf6',
 };
 
 const DAY_NAMES = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
@@ -43,9 +43,7 @@ export default function MonthlyCalendar({ logs, onDateClick }) {
   logs.forEach(log => {
     if (log.date) {
       const logDate = new Date(log.date);
-      // Ensure we match local date string
       const dateStr = `${logDate.getFullYear()}-${String(logDate.getMonth() + 1).padStart(2, '0')}-${String(logDate.getDate()).padStart(2, '0')}`;
-      // Keep the most recent log of the day if there are multiple
       if (!logsByDate[dateStr]) {
         logsByDate[dateStr] = log;
       }
@@ -73,20 +71,26 @@ export default function MonthlyCalendar({ logs, onDateClick }) {
       cells.push(
         <div 
           key={day} 
-          className={`${styles.dateCell} ${isToday(day) ? styles.today : ''}`} 
-          title={logForDay ? `기분: ${logForDay.mood}` : ''}
-          onClick={() => onDateClick && onDateClick(dateStr)}
-          style={{ cursor: 'pointer' }}
+          className={`${styles.dateCell} ${isToday(day) ? styles.today : ''} ${logForDay ? styles.hasLog : ''}`} 
+          onClick={() => logForDay && onDateClick && onDateClick(dateStr)}
         >
+          <span className={styles.dateNumber}>{day}</span>
           {logForDay && (
             <div 
-              className={styles.moodDot} 
+              className={styles.moodIndicator} 
               style={{ backgroundColor: MOOD_COLORS[logForDay.mood] }}
+              title={`기분: ${logForDay.mood}`}
             />
           )}
-          {day}
         </div>
       );
+    }
+
+    // Fill remaining cells for a complete grid (optional, but keeps table rectangular)
+    const totalCells = firstDay + daysInMonth;
+    const remainingCells = (7 - (totalCells % 7)) % 7;
+    for (let i = 0; i < remainingCells; i++) {
+      cells.push(<div key={`empty-end-${i}`} className={`${styles.dateCell} ${styles.empty}`}></div>);
     }
 
     return cells;

@@ -1,10 +1,9 @@
 import { useState, useEffect } from 'react'
 import Layout from './components/Layout/Layout'
 import ChatReflection from './components/ChatReflection/ChatReflection'
-import DotCalendar from './components/DotCalendar/DotCalendar'
-import MonthlyCalendar from './components/MonthlyCalendar/MonthlyCalendar'
 import DayView from './components/DayView/DayView'
 import DashboardWidgets from './components/DashboardWidgets/DashboardWidgets'
+import CalendarView from './components/CalendarView/CalendarView'
 import AuthScreen from './components/AuthScreen/AuthScreen'
 import { supabase } from './lib/supabaseClient'
 
@@ -13,6 +12,7 @@ function App() {
   const [logs, setLogs] = useState([])
   const [loading, setLoading] = useState(true)
   const [selectedDate, setSelectedDate] = useState(null)
+  const [currentTab, setCurrentTab] = useState('write') // 'write' or 'calendar'
 
   // Auth Listener
   useEffect(() => {
@@ -122,14 +122,54 @@ function App() {
             flexShrink: 0,
             position: 'relative'
           }}>
-            <h1 style={{ 
-              fontSize: '1.5rem', 
-              fontWeight: 700, 
-              color: '#3b82f6',
-              letterSpacing: '-0.03em'
-            }}>
-              ZeroLog ✨
-            </h1>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '2rem' }}>
+              <h1 style={{ 
+                fontSize: '1.5rem', 
+                fontWeight: 700, 
+                color: '#3b82f6',
+                letterSpacing: '-0.03em',
+                margin: 0
+              }}>
+                ZeroLog ✨
+              </h1>
+              
+              {!selectedDate && (
+                <div style={{ display: 'flex', gap: '0.5rem', background: '#e2e8f0', padding: '0.3rem', borderRadius: '12px' }}>
+                  <button 
+                    onClick={() => setCurrentTab('write')}
+                    style={{
+                      padding: '0.4rem 1.2rem',
+                      borderRadius: '8px',
+                      border: 'none',
+                      background: currentTab === 'write' ? '#ffffff' : 'transparent',
+                      color: currentTab === 'write' ? '#1e293b' : '#64748b',
+                      fontWeight: currentTab === 'write' ? 600 : 500,
+                      boxShadow: currentTab === 'write' ? '0 2px 4px rgba(0,0,0,0.05)' : 'none',
+                      cursor: 'pointer',
+                      transition: 'all 0.2s'
+                    }}
+                  >
+                    일기 쓰기
+                  </button>
+                  <button 
+                    onClick={() => setCurrentTab('calendar')}
+                    style={{
+                      padding: '0.4rem 1.2rem',
+                      borderRadius: '8px',
+                      border: 'none',
+                      background: currentTab === 'calendar' ? '#ffffff' : 'transparent',
+                      color: currentTab === 'calendar' ? '#1e293b' : '#64748b',
+                      fontWeight: currentTab === 'calendar' ? 600 : 500,
+                      boxShadow: currentTab === 'calendar' ? '0 2px 4px rgba(0,0,0,0.05)' : 'none',
+                      cursor: 'pointer',
+                      transition: 'all 0.2s'
+                    }}
+                  >
+                    달력 모아보기
+                  </button>
+                </div>
+              )}
+            </div>
             <button 
               onClick={handleLogout}
               style={{
@@ -151,7 +191,7 @@ function App() {
           
           <main style={{ 
             display: 'grid', 
-            gridTemplateColumns: selectedDate ? 'minmax(400px, 800px)' : 'minmax(300px, 1fr) minmax(300px, 1fr)',
+            gridTemplateColumns: selectedDate ? 'minmax(400px, 800px)' : (currentTab === 'write' ? 'minmax(300px, 1fr) minmax(300px, 1fr)' : '1fr'),
             justifyContent: selectedDate ? 'center' : 'stretch',
             gridTemplateRows: 'minmax(0, 1fr)',
             gap: '1.5rem',
@@ -168,22 +208,24 @@ function App() {
                 onBack={() => setSelectedDate(null)}
                 onAddLog={(newLog) => {
                   handleAddLog(newLog);
-                  // Stay on DayView, which will now display the added log
                 }}
                 user={session.user}
               />
-            ) : (
+            ) : currentTab === 'write' ? (
               <>
                 {/* 1열: 질문지 (대화형 일기 쓰기 폼) */}
                 <div style={{ display: 'flex', flexDirection: 'column', height: '100%', minHeight: 0 }}>
                   <ChatReflection onAddLog={handleAddLog} user={session.user} />
                 </div>
-                {/* 2열: 위젯 및 달력 */}
+                {/* 2열: 대시보드 위젯 */}
                 <div style={{ display: 'flex', flexDirection: 'column', height: '100%', minHeight: 0, gap: '1.5rem' }}>
                   <DashboardWidgets logs={logs} />
-                  <MonthlyCalendar logs={logs} onDateClick={setSelectedDate} />
                 </div>
               </>
+            ) : (
+              <div style={{ display: 'flex', flexDirection: 'column', height: '100%', minHeight: 0 }}>
+                <CalendarView logs={logs} onDateClick={setSelectedDate} />
+              </div>
             )}
           </main>
         </>

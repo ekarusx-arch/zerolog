@@ -3,12 +3,11 @@
   border: 1px solid var(--color-border);
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.04);
   border-radius: 20px;
-  padding: 1.5rem;
+  padding: 2rem;
   display: flex;
   flex-direction: column;
   gap: 1.5rem;
-  flex-shrink: 0;
-  transition: all var(--transition-normal);
+  height: 100%;
 }
 
 .header {
@@ -18,106 +17,112 @@
 }
 
 .monthTitle {
-  font-size: 1.25rem;
-  font-weight: 600;
+  font-size: 2rem;
+  font-weight: 700;
   color: var(--color-text-primary);
-  letter-spacing: -0.02em;
+  margin: 0;
 }
 
 .navButton {
   background: #f8fafc;
   border: 1px solid var(--color-border);
   color: var(--color-text-secondary);
-  width: 32px;
-  height: 32px;
-  border-radius: 10px;
+  width: 40px;
+  height: 40px;
+  border-radius: 12px;
   display: flex;
   align-items: center;
   justify-content: center;
   cursor: pointer;
-  transition: all var(--transition-fast);
+  transition: all 0.2s;
+  font-size: 1.2rem;
 }
 
 .navButton:hover {
   background: #e2e8f0;
   color: var(--color-text-primary);
-  transform: translateY(-1px);
+  transform: translateY(-2px);
 }
 
 .grid {
   display: grid;
   grid-template-columns: repeat(7, 1fr);
-  gap: 0.5rem;
-  text-align: center;
+  grid-auto-rows: minmax(80px, 1fr);
+  gap: 1px;
+  background: var(--color-border);
+  border: 1px solid var(--color-border);
+  border-radius: 12px;
+  overflow: hidden;
+  flex: 1;
 }
 
 .dayName {
-  font-size: 0.75rem;
+  font-size: 0.85rem;
   font-weight: 600;
   color: var(--color-text-secondary);
-  padding-bottom: 0.5rem;
+  padding: 1rem 0;
+  text-align: center;
   text-transform: uppercase;
-  letter-spacing: 0.05em;
+  background: #f8fafc;
+  height: max-content;
 }
 
 .dateCell {
-  position: relative;
-  aspect-ratio: 1;
+  background: #ffffff;
+  padding: 0.5rem;
   display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 0.9rem;
-  font-weight: 500;
-  color: var(--color-text-primary);
-  border-radius: 50%;
-  cursor: default;
-  transition: all var(--transition-fast);
-  z-index: 1;
+  flex-direction: column;
+  align-items: flex-end;
+  justify-content: space-between;
+  transition: all 0.2s;
+  position: relative;
+  min-height: 80px;
 }
 
 .dateCell.empty {
-  visibility: hidden;
+  background: #f8fafc;
 }
 
-.dateCell.today {
-  color: var(--color-text-primary);
+.dateCell:hover:not(.empty) {
+  background: #f1f5f9;
+}
+
+.dateCell.hasLog {
+  cursor: pointer;
+}
+
+.dateCell.hasLog:hover {
+  box-shadow: inset 0 0 0 2px #3b82f6;
+  z-index: 10;
+}
+
+.dateNumber {
+  font-size: 1rem;
+  font-weight: 500;
+  color: var(--color-text-secondary);
+}
+
+.today .dateNumber {
+  color: #ffffff;
+  background: #3b82f6;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   font-weight: 700;
 }
 
-.dateCell.today::after {
-  content: '';
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
+.moodIndicator {
   width: 100%;
-  height: 100%;
-  border: 2px solid #e2e8f0;
-  border-radius: 50%;
-  z-index: -1;
+  height: 8px;
+  border-radius: 4px;
+  opacity: 0.8;
+  margin-top: auto;
+  transition: opacity 0.2s;
 }
 
-.moodDot {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  width: 100%;
-  height: 100%;
-  border-radius: 50%;
-  opacity: 0.15;
-  z-index: 0;
-  transition: all var(--transition-fast);
-  filter: blur(0px);
-}
-
-.dateCell:hover .moodDot {
-  opacity: 0.3;
-  filter: blur(2px);
-  transform: translate(-50%, -50%) scale(1.2);
-}
-
-.dateCell:hover {
-  transform: scale(1.1);
-  color: var(--color-text-primary);
+.dateCell:hover .moodIndicator {
+  opacity: 1;
 }

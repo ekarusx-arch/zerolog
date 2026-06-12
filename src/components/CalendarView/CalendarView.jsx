@@ -3,8 +3,7 @@ import MonthlyCalendar from '../MonthlyCalendar/MonthlyCalendar';
 import YearlyCalendar from '../YearlyCalendar/YearlyCalendar';
 import styles from './CalendarView.module.css';
 
-export default function CalendarView({ logs, onDateClick }) {
-  const [viewMode, setViewMode] = useState('monthly'); // 'monthly' | 'yearly'
+export default function CalendarView({ logs, onDateClick, viewMode, setViewMode }) {
 
   return (
     <div className={styles.container}>

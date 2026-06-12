@@ -13,6 +13,7 @@ function App() {
   const [loading, setLoading] = useState(true)
   const [selectedDate, setSelectedDate] = useState(null)
   const [currentTab, setCurrentTab] = useState('write') // 'write' or 'calendar'
+  const [calendarViewMode, setCalendarViewMode] = useState('monthly')
 
   // Auth Listener
   useEffect(() => {
@@ -224,7 +225,12 @@ function App() {
               </>
             ) : (
               <div style={{ display: 'flex', flexDirection: 'column', height: '100%', minHeight: 0 }}>
-                <CalendarView logs={logs} onDateClick={setSelectedDate} />
+                <CalendarView 
+                  logs={logs} 
+                  onDateClick={setSelectedDate} 
+                  viewMode={calendarViewMode} 
+                  setViewMode={setCalendarViewMode} 
+                />
               </div>
             )}
           </main>

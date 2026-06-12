@@ -225,7 +225,10 @@ export default function DashboardWidgets({ logs }) {
                 <div className={styles.bestMomentDate}>
                   {new Date(bestMoment.date).toLocaleDateString()} {MOOD_EMOJIS[bestMoment.mood]}
                 </div>
-                <p className={styles.bestMomentText}>"{bestMoment.text.substring(0, 80)}{bestMoment.text.length > 80 ? '...' : ''}"</p>
+                <p className={styles.bestMomentText}>
+                  "{(bestMoment.q2 || bestMoment.q1 || '').substring(0, 80)}
+                  {(bestMoment.q2 || bestMoment.q1 || '').length > 80 ? '...' : ''}"
+                </p>
               </>
             ) : (
               <div className={styles.emptyText}>아직 멋진 순간을 기다리고 있어요!</div>

@@ -54,7 +54,7 @@ export default function YearlyCalendar({ logs, onDateClick }) {
               <div 
                 key={day} 
                 className={`${styles.dayCell} ${logForDay ? styles.hasLog : ''}`}
-                style={{ backgroundColor: logForDay ? MOOD_COLORS[logForDay.mood] : 'transparent' }}
+                style={logForDay ? { backgroundColor: MOOD_COLORS[logForDay.mood] } : undefined}
                 title={logForDay ? `${dateStr} - ${logForDay.mood}` : dateStr}
                 onClick={() => logForDay && onDateClick && onDateClick(dateStr)}
               />

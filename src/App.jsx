@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react'
 import Layout from './components/Layout/Layout'
-import ReflectionForm from './components/ReflectionForm/ReflectionForm'
+import ChatReflection from './components/ChatReflection/ChatReflection'
 import DotCalendar from './components/DotCalendar/DotCalendar'
 import MonthlyCalendar from './components/MonthlyCalendar/MonthlyCalendar'
 import DayView from './components/DayView/DayView'
@@ -173,9 +173,9 @@ function App() {
               />
             ) : (
               <>
-                {/* 1열: 질문지 (일기 쓰기 폼) */}
+                {/* 1열: 질문지 (대화형 일기 쓰기 폼) */}
                 <div style={{ display: 'flex', flexDirection: 'column', height: '100%', minHeight: 0 }}>
-                  <ReflectionForm onAddLog={handleAddLog} user={session.user} />
+                  <ChatReflection onAddLog={handleAddLog} user={session.user} />
                 </div>
                 {/* 2열: 달력 */}
                 <div style={{ display: 'flex', flexDirection: 'column', height: '100%', minHeight: 0 }}>

@@ -173,11 +173,13 @@ function App() {
               />
             ) : (
               <>
+                {/* 1열: 질문지 (일기 쓰기 폼) */}
+                <div style={{ display: 'flex', flexDirection: 'column', height: '100%', minHeight: 0 }}>
+                  <ReflectionForm onAddLog={handleAddLog} user={session.user} />
+                </div>
+                {/* 2열: 달력 */}
                 <div style={{ display: 'flex', flexDirection: 'column', height: '100%', minHeight: 0 }}>
                   <MonthlyCalendar logs={logs} onDateClick={setSelectedDate} />
-                </div>
-                <div style={{ display: 'flex', flexDirection: 'column', height: '100%', minHeight: 0 }}>
-                  <DotCalendar logs={logs} onDeleteLog={handleDeleteLog} user={session.user} onDateClick={setSelectedDate} />
                 </div>
               </>
             )}

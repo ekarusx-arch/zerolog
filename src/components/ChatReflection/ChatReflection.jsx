@@ -53,17 +53,9 @@ const ChatReflection = ({ onAddLog, user }) => {
     }
 
     const genAI = new GoogleGenerativeAI(apiKey);
-    const safetySettings = [
-      { category: HarmCategory.HARM_CATEGORY_HARASSMENT, threshold: HarmBlockThreshold.BLOCK_NONE },
-      { category: HarmCategory.HARM_CATEGORY_HATE_SPEECH, threshold: HarmBlockThreshold.BLOCK_NONE },
-      { category: HarmCategory.HARM_CATEGORY_SEXUALLY_EXPLICIT, threshold: HarmBlockThreshold.BLOCK_NONE },
-      { category: HarmCategory.HARM_CATEGORY_DANGEROUS_CONTENT, threshold: HarmBlockThreshold.BLOCK_NONE },
-    ];
-
     const model = genAI.getGenerativeModel({ 
       model: "gemini-1.5-flash",
-      systemInstruction: SYSTEM_INSTRUCTION,
-      safetySettings
+      systemInstruction: SYSTEM_INSTRUCTION
     });
 
     const session = model.startChat({
@@ -115,19 +107,11 @@ const ChatReflection = ({ onAddLog, user }) => {
       const apiKey = import.meta.env.VITE_GEMINI_API_KEY;
       const genAI = new GoogleGenerativeAI(apiKey);
       
-      const safetySettings = [
-        { category: HarmCategory.HARM_CATEGORY_HARASSMENT, threshold: HarmBlockThreshold.BLOCK_NONE },
-        { category: HarmCategory.HARM_CATEGORY_HATE_SPEECH, threshold: HarmBlockThreshold.BLOCK_NONE },
-        { category: HarmCategory.HARM_CATEGORY_SEXUALLY_EXPLICIT, threshold: HarmBlockThreshold.BLOCK_NONE },
-        { category: HarmCategory.HARM_CATEGORY_DANGEROUS_CONTENT, threshold: HarmBlockThreshold.BLOCK_NONE },
-      ];
-
       const summaryModel = genAI.getGenerativeModel({ 
         model: "gemini-1.5-flash",
         generationConfig: {
           responseMimeType: "application/json",
-        },
-        safetySettings
+        }
       });
 
       const historyText = messages.map(m => `${m.role === 'model' ? 'Zero' : 'User'}: ${m.text}`).join('\n');

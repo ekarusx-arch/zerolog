@@ -8,7 +8,7 @@ const SYSTEM_INSTRUCTION = `
 사용자가 하루를 돌아보고 감정을 정리하여 마음을 비워낼 수 있도록 돕는 것이 목적입니다.
 절대로 한 번에 여러 질문을 던지지 마세요. 한 번에 딱 한 가지 질문만 부드럽게 던지세요.
 대답은 1~2문장으로 짧고 다정하게 해주세요.
-총 2~3번의 대화(사용자의 대답 횟수 기준)가 오가면, "오늘 하루도 정말 고생 많으셨어요. 이제 기록을 갈무리할게요." 라고 말하며 자연스럽게 대화를 종료하세요.
+총 3번의 대화(사용자의 대답 횟수 기준)가 오가면, "오늘 하루도 정말 고생 많으셨어요. 이제 기록을 갈무리할게요." 라고 말하며 자연스럽게 대화를 종료하세요.
 처음 시작할 때는 "오늘 하루 어떠셨나요? 가장 기억에 남는 일이 있다면 편하게 말씀해 주세요." 라고 시작하세요.
 `;
 
@@ -30,6 +30,7 @@ const ChatReflection = ({ onAddLog, user }) => {
   const [chatSession, setChatSession] = useState(null);
   const [apiKeyError, setApiKeyError] = useState(false);
   const [isFinished, setIsFinished] = useState(false);
+  const maxTurns = 3;
   
   const messagesEndRef = useRef(null);
 
@@ -79,7 +80,7 @@ const ChatReflection = ({ onAddLog, user }) => {
       setMessages(prev => [...prev, { role: 'model', text: botResponse }]);
 
       // Check if the bot implies conversation is ending
-      if (botResponse.includes("갈무리") || botResponse.includes("기록을 저장") || botResponse.includes("종료") || messages.filter(m => m.role === 'user').length >= 2) {
+      if (botResponse.includes("갈무리") || botResponse.includes("기록을 저장") || botResponse.includes("종료") || messages.filter(m => m.role === 'user').length >= maxTurns - 1) {
         setIsFinished(true);
         setTimeout(() => summarizeAndSave(), 1500);
       }
@@ -161,6 +162,9 @@ const ChatReflection = ({ onAddLog, user }) => {
         <div className={styles.headerInfo}>
           <h3>Zero</h3>
           <span>당신의 AI 리스너</span>
+        </div>
+        <div className={styles.turnIndicator}>
+          대화 진행도: {Math.min(messages.filter(m => m.role === 'user').length, maxTurns)} / {maxTurns}
         </div>
       </div>
 

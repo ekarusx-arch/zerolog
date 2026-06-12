@@ -93,7 +93,8 @@ const ChatReflection = ({ onAddLog, user }) => {
       }
     } catch (error) {
       console.error("Chat error:", error);
-      setMessages(prev => [...prev, { role: 'model', text: "앗, 대화를 처리하는 중 문제가 발생했어요. 잠시 후 다시 시도해주세요." }]);
+      const errorMessage = error.message ? error.message : "알 수 없는 오류";
+      setMessages(prev => [...prev, { role: 'model', text: `앗, 오류가 발생했어요: ${errorMessage}` }]);
     } finally {
       setIsTyping(false);
     }
@@ -149,7 +150,8 @@ const ChatReflection = ({ onAddLog, user }) => {
 
     } catch (error) {
       console.error("Summary error:", error);
-      setMessages(prev => [...prev, { role: 'model', text: "요약 저장 중 오류가 발생했습니다." }]);
+      const errorMessage = error.message ? error.message : "알 수 없는 오류";
+      setMessages(prev => [...prev, { role: 'model', text: `요약 저장 중 오류가 발생했습니다: ${errorMessage}` }]);
     } finally {
       setIsTyping(false);
     }

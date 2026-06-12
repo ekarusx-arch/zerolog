@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import styles from './ChatReflection.module.css';
-import { GoogleGenerativeAI } from '@google/generative-ai';
+import { GoogleGenerativeAI, HarmCategory, HarmBlockThreshold } from '@google/generative-ai';
 import { supabase } from '../../lib/supabaseClient';
 
 const SYSTEM_INSTRUCTION = `
@@ -13,14 +13,13 @@ const SYSTEM_INSTRUCTION = `
 `;
 
 const SUMMARY_PROMPT = `
-위 대화 내용을 바탕으로 다음 JSON 형식에 맞게 요약해주세요. JSON 외의 마크다운(\`\`\`), 다른 텍스트, 주석(//)은 절대 출력하지 마세요. 오직 순수한 JSON만 출력하세요.
+위 대화 내용을 바탕으로 다음 JSON 스키마에 맞게 요약해주세요.
 {
-  "mood": "great",
+  "mood": "great", // great, good, okay, bad, awful 중 하나만 선택
   "q1": "오늘 가장 감사했던 일 (대화에서 추출하거나 없으면 '특별히 언급되지 않았지만 평온한 하루를 보냈습니다.' 등으로 작성)",
   "q2": "오늘 아쉬웠거나 배운 점 (대화에서 추출)",
   "q3": "내일을 위해 비워내야 할 생각 (대화에서 추출)"
 }
-* 주의: mood는 반드시 great, good, okay, bad, awful 중 하나만 입력하세요.
 `;
 
 const ChatReflection = ({ onAddLog, user }) => {
@@ -54,9 +53,17 @@ const ChatReflection = ({ onAddLog, user }) => {
     }
 
     const genAI = new GoogleGenerativeAI(apiKey);
+    const safetySettings = [
+      { category: HarmCategory.HARM_CATEGORY_HARASSMENT, threshold: HarmBlockThreshold.BLOCK_NONE },
+      { category: HarmCategory.HARM_CATEGORY_HATE_SPEECH, threshold: HarmBlockThreshold.BLOCK_NONE },
+      { category: HarmCategory.HARM_CATEGORY_SEXUALLY_EXPLICIT, threshold: HarmBlockThreshold.BLOCK_NONE },
+      { category: HarmCategory.HARM_CATEGORY_DANGEROUS_CONTENT, threshold: HarmBlockThreshold.BLOCK_NONE },
+    ];
+
     const model = genAI.getGenerativeModel({ 
       model: "gemini-2.5-flash",
-      systemInstruction: SYSTEM_INSTRUCTION
+      systemInstruction: SYSTEM_INSTRUCTION,
+      safetySettings
     });
 
     const session = model.startChat({
@@ -105,17 +112,30 @@ const ChatReflection = ({ onAddLog, user }) => {
     setMessages(prev => [...prev, { role: 'model', text: "대화를 바탕으로 오늘 하루의 회고록을 정리하고 있습니다... ✍️" }]);
     
     try {
-      // Create a specific prompt to summarize
-      const result = await chatSession.sendMessage(SUMMARY_PROMPT);
+      const apiKey = import.meta.env.VITE_GEMINI_API_KEY;
+      const genAI = new GoogleGenerativeAI(apiKey);
+      
+      const safetySettings = [
+        { category: HarmCategory.HARM_CATEGORY_HARASSMENT, threshold: HarmBlockThreshold.BLOCK_NONE },
+        { category: HarmCategory.HARM_CATEGORY_HATE_SPEECH, threshold: HarmBlockThreshold.BLOCK_NONE },
+        { category: HarmCategory.HARM_CATEGORY_SEXUALLY_EXPLICIT, threshold: HarmBlockThreshold.BLOCK_NONE },
+        { category: HarmCategory.HARM_CATEGORY_DANGEROUS_CONTENT, threshold: HarmBlockThreshold.BLOCK_NONE },
+      ];
+
+      const summaryModel = genAI.getGenerativeModel({ 
+        model: "gemini-2.5-flash",
+        generationConfig: {
+          responseMimeType: "application/json",
+        },
+        safetySettings
+      });
+
+      const historyText = messages.map(m => `${m.role === 'model' ? 'Zero' : 'User'}: ${m.text}`).join('\n');
+      const prompt = `${SUMMARY_PROMPT}\n\n[대화 내역]\n${historyText}`;
+
+      const result = await summaryModel.generateContent(prompt);
       const responseText = result.response.text();
-      
-      // Extract JSON using regex in case the model adds extra text
-      const jsonMatch = responseText.match(/\{[\s\S]*\}/);
-      if (!jsonMatch) {
-        throw new Error("Failed to find JSON in response: " + responseText);
-      }
-      
-      const summaryData = JSON.parse(jsonMatch[0]);
+      const summaryData = JSON.parse(responseText);
 
       const newLogData = {
         user_id: user.id,

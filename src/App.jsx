@@ -225,26 +225,27 @@ function App() {
                 }}
                 user={session.user}
               />
-            ) : currentTab === 'write' ? (
+            ) : (
               <>
                 {/* 1열: 질문지 (대화형 회고 폼) */}
-                <div style={{ display: 'flex', flexDirection: 'column', height: '100%', minHeight: 0 }}>
+                <div style={{ display: currentTab === 'write' ? 'flex' : 'none', flexDirection: 'column', height: '100%', minHeight: 0 }}>
                   <ChatReflection onAddLog={handleAddLog} user={session.user} />
                 </div>
                 {/* 2열: 대시보드 위젯 */}
-                <div style={{ display: 'flex', flexDirection: 'column', height: '100%', minHeight: 0, gap: '1.5rem', overflowY: 'auto', paddingRight: '0.5rem', overflowX: 'hidden' }}>
+                <div style={{ display: currentTab === 'write' ? 'flex' : 'none', flexDirection: 'column', height: '100%', minHeight: 0, gap: '1.5rem', overflowY: 'auto', paddingRight: '0.5rem', overflowX: 'hidden' }}>
                   <DashboardWidgets logs={logs} />
                 </div>
+                
+                {/* 캘린더 모아보기 탭 */}
+                <div style={{ display: currentTab === 'calendar' ? 'flex' : 'none', flexDirection: 'column', height: '100%', minHeight: 0 }}>
+                  <CalendarView 
+                    logs={logs} 
+                    onDateClick={setSelectedDate} 
+                    viewMode={calendarViewMode} 
+                    setViewMode={setCalendarViewMode} 
+                  />
+                </div>
               </>
-            ) : (
-              <div style={{ display: 'flex', flexDirection: 'column', height: '100%', minHeight: 0 }}>
-                <CalendarView 
-                  logs={logs} 
-                  onDateClick={setSelectedDate} 
-                  viewMode={calendarViewMode} 
-                  setViewMode={setCalendarViewMode} 
-                />
-              </div>
             )}
           </main>
         </>

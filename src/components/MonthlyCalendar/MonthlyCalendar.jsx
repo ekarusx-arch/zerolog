@@ -76,11 +76,16 @@ export default function MonthlyCalendar({ logs, onDateClick }) {
         >
           <span className={styles.dateNumber}>{day}</span>
           {logForDay && (
-            <div 
-              className={styles.moodIndicator} 
-              style={{ backgroundColor: MOOD_COLORS[logForDay.mood] }}
-              title={`기분: ${logForDay.mood}`}
-            />
+            <div className={styles.logSummaryContainer}>
+              <div 
+                className={styles.moodIndicator} 
+                style={{ backgroundColor: MOOD_COLORS[logForDay.mood] }}
+                title={`기분: ${logForDay.mood}`}
+              />
+              <div className={styles.logSummaryText} title={logForDay.q1}>
+                {logForDay.q1}
+              </div>
+            </div>
           )}
         </div>
       );

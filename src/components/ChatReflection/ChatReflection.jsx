@@ -54,7 +54,7 @@ const ChatReflection = ({ onAddLog, user }) => {
 
     const genAI = new GoogleGenerativeAI(apiKey);
     const model = genAI.getGenerativeModel({ 
-      model: "gemini-2.5-flash",
+      model: "gemini-2.0-flash",
       systemInstruction: SYSTEM_INSTRUCTION
     });
 
@@ -109,7 +109,7 @@ const ChatReflection = ({ onAddLog, user }) => {
       const genAI = new GoogleGenerativeAI(apiKey);
       
       const summaryModel = genAI.getGenerativeModel({ 
-        model: "gemini-2.5-flash",
+        model: "gemini-2.0-flash",
         generationConfig: {
           responseMimeType: "application/json",
         }

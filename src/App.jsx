@@ -232,7 +232,7 @@ function App() {
                   <ChatReflection onAddLog={handleAddLog} user={session.user} />
                 </div>
                 {/* 2열: 대시보드 위젯 */}
-                <div style={{ display: 'flex', flexDirection: 'column', height: '100%', minHeight: 0, gap: '1.5rem' }}>
+                <div style={{ display: 'flex', flexDirection: 'column', height: '100%', minHeight: 0, gap: '1.5rem', overflowY: 'auto', paddingRight: '0.5rem', overflowX: 'hidden' }}>
                   <DashboardWidgets logs={logs} />
                 </div>
               </>

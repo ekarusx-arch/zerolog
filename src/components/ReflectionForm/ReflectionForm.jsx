@@ -67,6 +67,15 @@ const ReflectionForm = ({ onAddLog, user, overrideDate }) => {
     setRecordingField(field);
   };
 
+  const insertTimeTag = (setField) => {
+    const now = new Date();
+    const hours = String(now.getHours()).padStart(2, '0');
+    const minutes = String(now.getMinutes()).padStart(2, '0');
+    const timeTag = `[${hours}:${minutes}] `;
+    
+    setField(prev => prev + (prev && !prev.endsWith(' ') && !prev.endsWith('\n') ? ' ' : '') + timeTag);
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (!mood) {
@@ -130,7 +139,10 @@ const ReflectionForm = ({ onAddLog, user, overrideDate }) => {
         <div className={styles.questionBlock}>
           <div className={styles.labelHeader}>
             <label htmlFor="q1" className={styles.label}>오늘 가장 감사했던 일은?</label>
-            <button type="button" className={`${styles.micButton} ${recordingField === 'q1' ? styles.recording : ''}`} onClick={() => toggleRecording('q1')} title="음성으로 입력하기">🎤</button>
+            <div className={styles.actionButtons}>
+              <button type="button" className={styles.timeButton} onClick={() => insertTimeTag(setQ1)} title="현재 시간 삽입하기">🕒</button>
+              <button type="button" className={`${styles.micButton} ${recordingField === 'q1' ? styles.recording : ''}`} onClick={() => toggleRecording('q1')} title="음성으로 입력하기">🎤</button>
+            </div>
           </div>
           <textarea
             id="q1"
@@ -145,7 +157,10 @@ const ReflectionForm = ({ onAddLog, user, overrideDate }) => {
         <div className={styles.questionBlock}>
           <div className={styles.labelHeader}>
             <label htmlFor="q2" className={styles.label}>오늘 아쉬웠거나 배운 점은?</label>
-            <button type="button" className={`${styles.micButton} ${recordingField === 'q2' ? styles.recording : ''}`} onClick={() => toggleRecording('q2')} title="음성으로 입력하기">🎤</button>
+            <div className={styles.actionButtons}>
+              <button type="button" className={styles.timeButton} onClick={() => insertTimeTag(setQ2)} title="현재 시간 삽입하기">🕒</button>
+              <button type="button" className={`${styles.micButton} ${recordingField === 'q2' ? styles.recording : ''}`} onClick={() => toggleRecording('q2')} title="음성으로 입력하기">🎤</button>
+            </div>
           </div>
           <textarea
             id="q2"
@@ -160,7 +175,10 @@ const ReflectionForm = ({ onAddLog, user, overrideDate }) => {
         <div className={styles.questionBlock}>
           <div className={styles.labelHeader}>
             <label htmlFor="q3" className={styles.label}>내일을 위해 비워내야 할 생각은?</label>
-            <button type="button" className={`${styles.micButton} ${recordingField === 'q3' ? styles.recording : ''}`} onClick={() => toggleRecording('q3')} title="음성으로 입력하기">🎤</button>
+            <div className={styles.actionButtons}>
+              <button type="button" className={styles.timeButton} onClick={() => insertTimeTag(setQ3)} title="현재 시간 삽입하기">🕒</button>
+              <button type="button" className={`${styles.micButton} ${recordingField === 'q3' ? styles.recording : ''}`} onClick={() => toggleRecording('q3')} title="음성으로 입력하기">🎤</button>
+            </div>
           </div>
           <textarea
             id="q3"

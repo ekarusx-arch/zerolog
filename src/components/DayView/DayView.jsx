@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import styles from './DayView.module.css';
-import ReflectionForm from '../ReflectionForm/ReflectionForm';
 import { supabase } from '../../lib/supabaseClient';
 
 const MOOD_COLORS = {
@@ -123,8 +122,7 @@ const DayView = ({ selectedDate, log, onBack, onAddLog, user }) => {
           </div>
         ) : (
           <div className={styles.formWrapper}>
-            <p className={styles.noLogMessage}>이 날의 기록이 없습니다. 새로운 기록을 남겨보세요.</p>
-            <ReflectionForm onAddLog={onAddLog} user={user} overrideDate={selectedDate} />
+            <p className={styles.noLogMessage}>이 날의 기록이 비워져 있습니다.</p>
           </div>
         )}
       </div>

@@ -107,6 +107,27 @@
   align-items: center;
 }
 
+.actionButtons {
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+}
+
+.timeButton {
+  background: none;
+  border: none;
+  color: var(--color-text-secondary);
+  font-size: 1.1rem;
+  cursor: pointer;
+  padding: 0.2rem;
+  border-radius: 50%;
+  transition: color var(--transition-fast);
+}
+
+.timeButton:hover {
+  color: var(--color-text-primary);
+}
+
 .micButton {
   background: none;
   border: none;

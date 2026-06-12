@@ -1,7 +1,6 @@
 import { useState } from 'react';
 import styles from './DotCalendar.module.css';
 import { supabase } from '../../lib/supabaseClient';
-import SoundtrackPlayer from '../SoundtrackPlayer/SoundtrackPlayer';
 
 const MOOD_COLORS = {
   great: 'var(--color-mood-great)',
@@ -44,12 +43,28 @@ const DotCalendar = ({ logs, onDeleteLog, user, onDateClick }) => {
     
     setExportingId(logId);
     
+    // Parse time tags like [14:30]
+    const timeTagRegex = /\[\d{2}:\d{2}\]/g;
+    const timeTags = text.match(timeTagRegex) || [];
+    
+    // Parse hashtags like #idea #할일
+    const hashTagRegex = /#[\w가-힣]+/g;
+    const hashTags = text.match(hashTagRegex) || [];
+    
+    const metadata = {
+      timeTags,
+      hashTags,
+      exportedFrom: 'ZeroLog',
+      originalLogId: logId
+    };
+
     const { error } = await supabase
       .from('brain_dumps')
       .insert([{
         user_id: user.id,
         content: text,
-        color: 'gray' // Default color for exported logs
+        color: 'gray', // Default color for exported logs
+        metadata: metadata
       }]);
 
     setExportingId(null);
@@ -97,7 +112,11 @@ const DotCalendar = ({ logs, onDeleteLog, user, onDateClick }) => {
             </div>
             
             <div className={`${styles.logContent} ${expandedId === log.id ? styles.expanded : ''}`}>
-              <SoundtrackPlayer soundtrack={log.soundtrack} />
+              {log.soundtrack && (
+                <div className={styles.soundtrackBlock}>
+                  <span role="img" aria-label="headphones">🎧</span> <strong>사운드트랙:</strong> {log.soundtrack}
+                </div>
+              )}
               <div className={styles.qnaBlock}>
                 <strong>감사했던 일</strong>
                 <p>{log.q1}</p>

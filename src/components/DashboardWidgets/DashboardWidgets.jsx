@@ -1,4 +1,5 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
+import RetrospectiveTopics from './RetrospectiveTopics';
 import styles from './DashboardWidgets.module.css';
 
 const MOOD_COLORS = {
@@ -70,6 +71,8 @@ const DashboardWidgets = ({ logs }) => {
 
   return (
     <div className={styles.container}>
+      <RetrospectiveTopics />
+      <h2 className={styles.sectionTitle}>ZeroInsight 대시보드</h2>
       <div className={styles.widgetCard}>
         <div className={styles.widgetHeader}>
           <span className={styles.widgetIcon}>🔥</span>

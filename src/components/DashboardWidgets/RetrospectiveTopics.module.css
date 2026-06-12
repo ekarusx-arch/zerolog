@@ -1,0 +1,54 @@
+.container {
+  background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%);
+  border: 1px solid #bae6fd;
+  border-radius: 20px;
+  padding: 1.5rem;
+  box-shadow: 0 4px 15px rgba(56, 189, 248, 0.1);
+  display: flex;
+  flex-direction: column;
+  gap: 0.8rem;
+  margin-bottom: 1.5rem; /* Space between this widget and the ones below */
+}
+
+.title {
+  margin: 0;
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: #0369a1;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.subtitle {
+  margin: 0;
+  font-size: 0.85rem;
+  color: #0284c7;
+  opacity: 0.8;
+}
+
+.topicList {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  margin-top: 0.5rem;
+}
+
+.topicChip {
+  background: rgba(255, 255, 255, 0.7);
+  border: 1px solid #e0f2fe;
+  padding: 0.8rem 1rem;
+  border-radius: 12px;
+  font-size: 0.9rem;
+  color: #0f172a;
+  font-weight: 500;
+  transition: all 0.2s;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.02);
+  cursor: default;
+}
+
+.topicChip:hover {
+  background: #ffffff;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 10px rgba(56, 189, 248, 0.15);
+}

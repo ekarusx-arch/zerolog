@@ -149,7 +149,7 @@ function App() {
                       transition: 'all 0.2s'
                     }}
                   >
-                    일기 쓰기
+                    하루 회고
                   </button>
                   <button 
                     onClick={() => setCurrentTab('calendar')}
@@ -165,7 +165,7 @@ function App() {
                       transition: 'all 0.2s'
                     }}
                   >
-                    달력 모아보기
+                    회고 모아보기
                   </button>
                 </div>
               )}
@@ -213,7 +213,7 @@ function App() {
               />
             ) : currentTab === 'write' ? (
               <>
-                {/* 1열: 질문지 (대화형 일기 쓰기 폼) */}
+                {/* 1열: 질문지 (대화형 회고 폼) */}
                 <div style={{ display: 'flex', flexDirection: 'column', height: '100%', minHeight: 0 }}>
                   <ChatReflection onAddLog={handleAddLog} user={session.user} />
                 </div>

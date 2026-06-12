@@ -4,8 +4,8 @@ import { GoogleGenerativeAI } from '@google/generative-ai';
 import { supabase } from '../../lib/supabaseClient';
 
 const SYSTEM_INSTRUCTION = `
-당신은 다정하고 공감 능력이 뛰어난 일기 도우미 '제로(Zero)'입니다.
-사용자가 하루를 돌아보고 감정을 정리할 수 있도록 돕는 것이 목적입니다.
+당신은 다정하고 공감 능력이 뛰어난 회고 파트너 '제로(Zero)'입니다.
+사용자가 하루를 돌아보고 감정을 정리하여 마음을 비워낼 수 있도록 돕는 것이 목적입니다.
 절대로 한 번에 여러 질문을 던지지 마세요. 한 번에 딱 한 가지 질문만 부드럽게 던지세요.
 대답은 1~2문장으로 짧고 다정하게 해주세요.
 총 2~3번의 대화(사용자의 대답 횟수 기준)가 오가면, "오늘 하루도 정말 고생 많으셨어요. 이제 기록을 갈무리할게요." 라고 말하며 자연스럽게 대화를 종료하세요.
@@ -92,7 +92,7 @@ const ChatReflection = ({ onAddLog, user }) => {
 
   const summarizeAndSave = async () => {
     setIsTyping(true);
-    setMessages(prev => [...prev, { role: 'model', text: "대화를 바탕으로 오늘 하루를 일기로 정리하고 있습니다... ✍️" }]);
+    setMessages(prev => [...prev, { role: 'model', text: "대화를 바탕으로 오늘 하루의 회고록을 정리하고 있습니다... ✍️" }]);
     
     try {
       // Create a specific prompt to summarize
@@ -125,9 +125,9 @@ const ChatReflection = ({ onAddLog, user }) => {
 
       if (error) {
         console.error("Error saving log:", error);
-        setMessages(prev => [...prev, { role: 'model', text: "일기 저장에 실패했습니다. 다시 시도해주세요." }]);
+        setMessages(prev => [...prev, { role: 'model', text: "회고 기록 저장에 실패했습니다. 다시 시도해주세요." }]);
       } else if (data) {
-        setMessages(prev => [...prev, { role: 'model', text: "일기 작성이 완료되었습니다! 달력에서 확인해보세요. ✨" }]);
+        setMessages(prev => [...prev, { role: 'model', text: "오늘의 회고가 깔끔하게 갈무리되었습니다! 우측 상단 탭에서 확인해보세요. ✨" }]);
         setTimeout(() => {
           onAddLog(data);
         }, 2000);

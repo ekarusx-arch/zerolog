@@ -33,10 +33,18 @@ const ChatReflection = ({ onAddLog, user }) => {
   const maxTurns = 3;
   
   const messagesEndRef = useRef(null);
+  const inputRef = useRef(null);
 
   useEffect(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
   }, [messages, isTyping]);
+
+  // Re-focus the input automatically when the AI finishes typing
+  useEffect(() => {
+    if (!isTyping && !isFinished && inputRef.current) {
+      inputRef.current.focus();
+    }
+  }, [isTyping, isFinished]);
 
   useEffect(() => {
     const apiKey = import.meta.env.VITE_GEMINI_API_KEY;
@@ -191,12 +199,14 @@ const ChatReflection = ({ onAddLog, user }) => {
       <div className={styles.inputArea}>
         <form onSubmit={handleSendMessage} className={styles.form}>
           <input
+            ref={inputRef}
             type="text"
             className={styles.input}
             value={inputText}
             onChange={(e) => setInputText(e.target.value)}
             placeholder="오늘 하루에 대해 이야기해주세요..."
             disabled={isTyping || isFinished}
+            autoFocus
           />
           <button type="submit" className={styles.sendButton} disabled={!inputText.trim() || isTyping || isFinished}>
             전송

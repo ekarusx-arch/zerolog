@@ -42,14 +42,18 @@ function App() {
 
   // Fetch Logs from Supabase when session exists
   useEffect(() => {
-    if (!session?.user) {
+    if (!session?.user?.id) {
       setLogs([]);
       setLoading(false);
       return;
     }
 
     const fetchLogs = async () => {
-      setLoading(true);
+      // Show loading screen only if it's the first load
+      if (logs.length === 0) {
+        setLoading(true);
+      }
+      
       const { data, error } = await supabase
         .from('zerolog_entries')
         .select('*')
@@ -64,7 +68,7 @@ function App() {
     };
 
     fetchLogs();
-  }, [session]);
+  }, [session?.user?.id]);
 
   // Update Aura Color whenever logs change
   useEffect(() => {

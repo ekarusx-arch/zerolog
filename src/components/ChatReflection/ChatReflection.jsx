@@ -61,7 +61,7 @@ const ChatReflection = ({ onAddLog, user }) => {
     ];
 
     const model = genAI.getGenerativeModel({ 
-      model: "gemini-2.5-flash",
+      model: "gemini-1.5-flash",
       systemInstruction: SYSTEM_INSTRUCTION,
       safetySettings
     });
@@ -123,7 +123,7 @@ const ChatReflection = ({ onAddLog, user }) => {
       ];
 
       const summaryModel = genAI.getGenerativeModel({ 
-        model: "gemini-2.5-flash",
+        model: "gemini-1.5-flash",
         generationConfig: {
           responseMimeType: "application/json",
         },

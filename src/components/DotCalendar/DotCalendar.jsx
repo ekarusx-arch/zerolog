@@ -12,7 +12,6 @@ const MOOD_COLORS = {
 
 const DotCalendar = ({ logs, onDeleteLog, user, onDateClick }) => {
   const [expandedId, setExpandedId] = useState(null);
-  const [exportingId, setExportingId] = useState(null);
 
   if (!logs || logs.length === 0) {
     return (
@@ -33,48 +32,6 @@ const DotCalendar = ({ logs, onDeleteLog, user, onDateClick }) => {
       day: 'numeric',
       weekday: 'short'
     }).format(d);
-  };
-
-  const handleExportToZeroSlate = async (logId, text) => {
-    if (!user) {
-      alert("로그인이 필요합니다.");
-      return;
-    }
-    
-    setExportingId(logId);
-    
-    // Parse time tags like [14:30]
-    const timeTagRegex = /\[\d{2}:\d{2}\]/g;
-    const timeTags = text.match(timeTagRegex) || [];
-    
-    // Parse hashtags like #idea #할일
-    const hashTagRegex = /#[\w가-힣]+/g;
-    const hashTags = text.match(hashTagRegex) || [];
-    
-    const metadata = {
-      timeTags,
-      hashTags,
-      exportedFrom: 'ZeroLog',
-      originalLogId: logId
-    };
-
-    const { error } = await supabase
-      .from('brain_dumps')
-      .insert([{
-        user_id: user.id,
-        content: text,
-        color: 'gray', // Default color for exported logs
-        metadata: metadata
-      }]);
-
-    setExportingId(null);
-
-    if (error) {
-      console.error('Error exporting to ZeroSlate:', error);
-      alert('ZeroSlate로 전송하는 중 오류가 발생했습니다.');
-    } else {
-      alert('ZeroSlate Brain Dump로 성공적으로 전송되었습니다! 🚀\n내일 아침 ZeroSlate에서 확인해보세요.');
-    }
   };
 
   return (
@@ -128,14 +85,6 @@ const DotCalendar = ({ logs, onDeleteLog, user, onDateClick }) => {
               <div className={styles.qnaBlock}>
                 <div className={styles.qnaHeaderWithExport}>
                   <strong>비워낼 생각</strong>
-                  <button 
-                    className={styles.exportButton}
-                    onClick={() => handleExportToZeroSlate(log.id, log.q3)}
-                    disabled={exportingId === log.id}
-                    title="ZeroSlate 생태계로 동기화하기"
-                  >
-                    {exportingId === log.id ? '전송 중...' : 'ZeroSlate로 보내기 ↗'}
-                  </button>
                 </div>
                 <p>{log.q3}</p>
               </div>

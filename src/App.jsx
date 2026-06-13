@@ -17,8 +17,8 @@ function App() {
   const [calendarViewMode, setCalendarViewMode] = useState('monthly')
   const [bgTheme, setBgTheme] = useState(() => {
     const saved = localStorage.getItem('zerolog_bg_theme');
-    if (saved === 'default' || saved === 'minimal') return 'aurora';
-    return saved || 'aurora';
+    if (saved === 'default' || saved === 'minimal') return 'night';
+    return saved || 'night';
   });
 
   // Apply Background Theme

@@ -2,11 +2,13 @@ import React, { useState, useRef, useEffect } from 'react';
 import styles from './BackgroundSelector.module.css';
 
 const THEMES = [
+  { id: 'night', name: 'Night', color: 'linear-gradient(135deg, #0f172a, #1e293b)' },
+  { id: 'midnight', name: 'Midnight', color: 'linear-gradient(135deg, #020617, #0f172a)' },
+  { id: 'twilight', name: 'Twilight', color: 'linear-gradient(135deg, #2e1065, #4c1d95)' },
+  { id: 'sunset', name: 'Sunset', color: 'linear-gradient(135deg, #431407, #7c2d12)' },
   { id: 'aurora', name: 'Aurora', color: 'linear-gradient(135deg, #f0f9ff, #f3e8ff)' },
-  { id: 'sunset', name: 'Sunset', color: 'linear-gradient(135deg, #fff7ed, #ffedd5)' },
   { id: 'ocean', name: 'Ocean', color: 'linear-gradient(135deg, #f0fdfa, #e0f2fe)' },
   { id: 'nature', name: 'Nature', color: 'linear-gradient(135deg, #f0fdf4, #fefce8)' },
-  { id: 'night', name: 'Night', color: 'linear-gradient(135deg, #0f172a, #1e293b)' },
 ];
 
 export default function BackgroundSelector({ currentTheme, onThemeChange }) {

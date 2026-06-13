@@ -3,6 +3,7 @@ import Layout from './components/Layout/Layout'
 import ChatReflection from './components/ChatReflection/ChatReflection'
 import DayView from './components/DayView/DayView'
 import DashboardWidgets from './components/DashboardWidgets/DashboardWidgets'
+import RetrospectiveTopics from './components/DashboardWidgets/RetrospectiveTopics'
 import CalendarView from './components/CalendarView/CalendarView'
 import AuthScreen from './components/AuthScreen/AuthScreen'
 import BackgroundSelector from './components/BackgroundSelector/BackgroundSelector'
@@ -233,13 +234,44 @@ function App() {
               />
             ) : (
               <>
-                {/* 1열: 질문지 (대화형 회고 폼) */}
-                <div style={{ display: currentTab === 'write' ? 'flex' : 'none', flexDirection: 'column', height: '100%', minHeight: 0 }}>
-                  <ChatReflection onAddLog={handleAddLog} user={session.user} />
+                {/* 1열: 질문지 (대화형 회고 폼) + 회고 추천 */}
+                <div style={{ display: currentTab === 'write' ? 'flex' : 'none', flexDirection: 'column', height: '100%', minHeight: 0, gap: '1rem' }}>
+                  <div style={{ flex: 1, minHeight: 0, display: 'flex', flexDirection: 'column' }}>
+                    <ChatReflection onAddLog={handleAddLog} user={session.user} />
+                  </div>
+                  <div style={{ flexShrink: 0 }}>
+                    <RetrospectiveTopics />
+                  </div>
                 </div>
-                {/* 2열: 대시보드 위젯 */}
-                <div style={{ display: currentTab === 'write' ? 'flex' : 'none', flexDirection: 'column', height: '100%', minHeight: 0, gap: '1.5rem', overflowY: 'auto', paddingRight: '0.5rem', overflowX: 'hidden' }}>
-                  <DashboardWidgets logs={logs} />
+                {/* 2열: 대시보드 위젯 + 유튜브 플리 */}
+                <div style={{ display: currentTab === 'write' ? 'flex' : 'none', flexDirection: 'column', height: '100%', minHeight: 0, gap: '1.5rem' }}>
+                  <div style={{ flex: 1, overflowY: 'auto', paddingRight: '0.5rem', overflowX: 'hidden' }}>
+                    <DashboardWidgets logs={logs} />
+                  </div>
+                  <div style={{ 
+                    flexShrink: 0, 
+                    background: 'var(--color-bg-base)', 
+                    border: '1px solid var(--color-border)', 
+                    borderRadius: '16px', 
+                    padding: '1rem',
+                    display: 'flex',
+                    flexDirection: 'column',
+                    gap: '0.8rem'
+                  }}>
+                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                      <span style={{ fontWeight: 600, color: 'var(--color-text-primary)', fontSize: '0.95rem' }}>🎵 하루끝플리</span>
+                      <span style={{ fontSize: '0.8rem', color: 'var(--color-text-secondary)' }}>음악과 함께 하루를 정리해보세요</span>
+                    </div>
+                    <iframe 
+                      width="100%" 
+                      src="https://www.youtube.com/embed/eHaxwrKR6to?autoplay=1&loop=1&playlist=eHaxwrKR6to" 
+                      title="하루끝플리 플레이어" 
+                      frameBorder="0" 
+                      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                      allowFullScreen
+                      style={{ borderRadius: '12px', aspectRatio: '16/9', height: 'auto' }}
+                    ></iframe>
+                  </div>
                 </div>
                 
                 {/* 캘린더 모아보기 탭 */}

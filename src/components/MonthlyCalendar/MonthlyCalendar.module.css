@@ -1,9 +1,9 @@
 .container {
   position: relative;
-  background: linear-gradient(-45deg, #f0f9ff, #e0e7ff, #f3e8ff, #f0fdf4);
+  background: var(--calendar-bg);
   background-size: 400% 400%;
   animation: gradientBG 15s ease infinite;
-  border: 1px solid rgba(255, 255, 255, 0.6);
+  border: 1px solid var(--calendar-border);
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.04);
   border-radius: 20px;
   padding: 2rem;
@@ -19,7 +19,7 @@
   position: absolute;
   top: -20%; left: -10%;
   width: 60%; height: 60%;
-  background: radial-gradient(circle, rgba(59, 130, 246, 0.2) 0%, transparent 70%);
+  background: radial-gradient(circle, var(--calendar-orb1) 0%, transparent 70%);
   animation: floatOrb 12s infinite ease-in-out alternate;
   z-index: 0;
 }
@@ -29,7 +29,7 @@
   position: absolute;
   bottom: -20%; right: -10%;
   width: 60%; height: 60%;
-  background: radial-gradient(circle, rgba(16, 185, 129, 0.2) 0%, transparent 70%);
+  background: radial-gradient(circle, var(--calendar-orb2) 0%, transparent 70%);
   animation: floatOrb 15s infinite ease-in-out alternate-reverse;
   z-index: 0;
 }
@@ -99,19 +99,19 @@
   padding: 0.8rem 0;
   text-align: center;
   text-transform: uppercase;
-  background: rgba(255, 255, 255, 0.4);
+  background: var(--calendar-cell-bg);
   backdrop-filter: blur(8px);
   -webkit-backdrop-filter: blur(8px);
   border-radius: 12px;
-  border: 1px solid rgba(255, 255, 255, 0.5);
+  border: 1px solid var(--calendar-cell-border);
   height: max-content;
 }
 
 .dateCell {
-  background: rgba(255, 255, 255, 0.6);
+  background: var(--calendar-cell-bg);
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
-  border: 1px solid rgba(255, 255, 255, 0.9);
+  border: 1px solid var(--calendar-cell-border);
   border-radius: 12px;
   padding: 0.8rem;
   display: flex;
@@ -124,13 +124,13 @@
 }
 
 .dateCell.empty {
-  background: rgba(255, 255, 255, 0.2);
-  border: 1px solid rgba(255, 255, 255, 0.3);
+  background: transparent;
+  border: 1px solid var(--calendar-border);
   backdrop-filter: none;
 }
 
 .dateCell:hover:not(.empty) {
-  background: rgba(255, 255, 255, 0.9);
+  background: var(--calendar-cell-hover);
   transform: translateY(-3px);
   box-shadow: 0 8px 20px rgba(0, 0, 0, 0.05);
 }

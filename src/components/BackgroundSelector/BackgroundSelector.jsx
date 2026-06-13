@@ -8,6 +8,7 @@ const THEMES = [
   { id: 'ocean', name: 'Ocean', color: 'linear-gradient(135deg, #f0fdfa, #e0f2fe)' },
   { id: 'nature', name: 'Nature', color: 'linear-gradient(135deg, #f0fdf4, #fefce8)' },
   { id: 'minimal', name: 'Minimal', color: '#f8fafc' },
+  { id: 'night', name: 'Night', color: 'linear-gradient(135deg, #0f172a, #1e293b)' },
 ];
 
 export default function BackgroundSelector({ currentTheme, onThemeChange }) {

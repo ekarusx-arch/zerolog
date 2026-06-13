@@ -23,6 +23,15 @@
   --transition-fast: 0.3s var(--bezier-smooth);
   --transition-normal: 0.5s var(--bezier-smooth);
   --transition-slow: 0.8s var(--bezier-smooth);
+
+  /* Component specific (Calendar) */
+  --calendar-bg: linear-gradient(-45deg, #f0f9ff, #e0e7ff, #f3e8ff, #f0fdf4);
+  --calendar-border: rgba(255, 255, 255, 0.6);
+  --calendar-cell-bg: rgba(255, 255, 255, 0.6);
+  --calendar-cell-border: rgba(255, 255, 255, 0.9);
+  --calendar-cell-hover: rgba(255, 255, 255, 0.9);
+  --calendar-orb1: rgba(59, 130, 246, 0.2);
+  --calendar-orb2: rgba(16, 185, 129, 0.2);
 }
 
 * {
@@ -80,6 +89,26 @@ body[data-theme='nature'] {
 /* 6. Minimal Theme */
 body[data-theme='minimal'] {
   background: #f8fafc;
+}
+
+/* 7. Night Theme */
+body[data-theme='night'] {
+  --color-bg-base: #0f172a;
+  --color-bg-surface: #1e293b;
+  --color-text-primary: #f8fafc;
+  --color-text-secondary: #94a3b8;
+  --color-border: #334155;
+  --calendar-bg: linear-gradient(-45deg, #0f172a, #1e293b, #020617, #1e1b4b);
+  --calendar-border: rgba(255, 255, 255, 0.05);
+  --calendar-cell-bg: rgba(255, 255, 255, 0.03);
+  --calendar-cell-border: rgba(255, 255, 255, 0.08);
+  --calendar-cell-hover: rgba(255, 255, 255, 0.08);
+  --calendar-orb1: rgba(59, 130, 246, 0.1);
+  --calendar-orb2: rgba(139, 92, 246, 0.1);
+
+  background: linear-gradient(-45deg, #0f172a, #1e293b, #020617);
+  background-size: 400% 400%;
+  animation: bgMove 20s ease infinite;
 }
 
 @keyframes bgMove {

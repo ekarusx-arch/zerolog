@@ -13,7 +13,7 @@
 
 .toggleGroup {
   display: flex;
-  background: #ffffff;
+  background: var(--color-bg-surface);
   border-radius: 30px;
   padding: 0.3rem;
   box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
@@ -35,7 +35,7 @@
 }
 
 .toggleButton.active {
-  background: #f1f5f9;
+  background: var(--color-bg-base);
   color: #3b82f6;
   font-weight: 600;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.03);

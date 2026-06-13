@@ -4,8 +4,7 @@ import styles from './BackgroundSelector.module.css';
 const THEMES = [
   { id: 'night', name: 'Night', color: 'linear-gradient(135deg, #0f172a, #1e293b)' },
   { id: 'midnight', name: 'Midnight', color: 'linear-gradient(135deg, #020617, #0f172a)' },
-  { id: 'twilight', name: 'Twilight', color: 'linear-gradient(135deg, #3b1473, #51219b)' },
-  { id: 'sunset', name: 'Sunset', color: 'linear-gradient(135deg, #5c1e13, #7c2616)' },
+  { id: 'sunset', name: 'Sunset', color: 'linear-gradient(135deg, #fff1f2, #fce7f3)' },
   { id: 'aurora', name: 'Aurora', color: 'linear-gradient(135deg, #f0f9ff, #f3e8ff)' },
   { id: 'ocean', name: 'Ocean', color: 'linear-gradient(135deg, #f0fdfa, #e0f2fe)' },
   { id: 'nature', name: 'Nature', color: 'linear-gradient(135deg, #f0fdf4, #fefce8)' },

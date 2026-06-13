@@ -1,9 +1,9 @@
 .container {
   position: relative;
-  background: linear-gradient(-45deg, #f0f9ff, #e0e7ff, #f3e8ff, #f0fdf4);
+  background: var(--calendar-bg);
   background-size: 400% 400%;
   animation: gradientBG 15s ease infinite;
-  border: 1px solid rgba(255, 255, 255, 0.6);
+  border: 1px solid var(--calendar-border);
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.04);
   border-radius: 20px;
   padding: 1.5rem;
@@ -19,7 +19,7 @@
   position: absolute;
   top: -20%; left: -10%;
   width: 60%; height: 60%;
-  background: radial-gradient(circle, rgba(59, 130, 246, 0.2) 0%, transparent 70%);
+  background: radial-gradient(circle, var(--calendar-orb1) 0%, transparent 70%);
   animation: floatOrb 12s infinite ease-in-out alternate;
   z-index: 0;
 }
@@ -29,7 +29,7 @@
   position: absolute;
   bottom: -20%; right: -10%;
   width: 60%; height: 60%;
-  background: radial-gradient(circle, rgba(16, 185, 129, 0.2) 0%, transparent 70%);
+  background: radial-gradient(circle, var(--calendar-orb2) 0%, transparent 70%);
   animation: floatOrb 15s infinite ease-in-out alternate-reverse;
   z-index: 0;
 }
@@ -63,7 +63,7 @@
 }
 
 .navButton {
-  background: #f8fafc;
+  background: var(--color-bg-base);
   border: 1px solid var(--color-border);
   color: var(--color-text-secondary);
   width: 40px;
@@ -78,7 +78,7 @@
 }
 
 .navButton:hover {
-  background: #e2e8f0;
+  background: var(--color-bg-surface);
   color: var(--color-text-primary);
   transform: translateY(-2px);
 }
@@ -111,12 +111,12 @@
   gap: 0.5rem;
   align-items: center;
   justify-content: center;
-  background: rgba(255, 255, 255, 0.6);
+  background: var(--calendar-cell-bg);
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
   padding: 0.8rem 0.5rem;
   border-radius: 12px;
-  border: 1px solid rgba(255, 255, 255, 0.9);
+  border: 1px solid var(--calendar-cell-border);
   box-shadow: 0 4px 15px rgba(0, 0, 0, 0.02);
   transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
@@ -143,7 +143,7 @@
   width: 18px;
   height: 18px;
   border-radius: 4px;
-  background: #f1f5f9;
+  background: var(--color-bg-base);
   transition: all 0.2s;
   display: flex;
   align-items: center;

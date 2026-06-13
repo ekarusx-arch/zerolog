@@ -149,15 +149,15 @@ function App() {
               </h1>
               
               {!selectedDate && (
-                <div style={{ display: 'flex', gap: '0.5rem', background: '#e2e8f0', padding: '0.3rem', borderRadius: '12px' }}>
+                <div style={{ display: 'flex', gap: '0.5rem', background: 'var(--color-bg-surface)', border: '1px solid var(--color-border)', padding: '0.3rem', borderRadius: '12px' }}>
                   <button 
                     onClick={() => setCurrentTab('write')}
                     style={{
                       padding: '0.4rem 1.2rem',
                       borderRadius: '8px',
                       border: 'none',
-                      background: currentTab === 'write' ? '#ffffff' : 'transparent',
-                      color: currentTab === 'write' ? '#1e293b' : '#64748b',
+                      background: currentTab === 'write' ? 'var(--color-bg-base)' : 'transparent',
+                      color: currentTab === 'write' ? 'var(--color-text-primary)' : 'var(--color-text-secondary)',
                       fontWeight: currentTab === 'write' ? 600 : 500,
                       boxShadow: currentTab === 'write' ? '0 2px 4px rgba(0,0,0,0.05)' : 'none',
                       cursor: 'pointer',
@@ -172,8 +172,8 @@ function App() {
                       padding: '0.4rem 1.2rem',
                       borderRadius: '8px',
                       border: 'none',
-                      background: currentTab === 'calendar' ? '#ffffff' : 'transparent',
-                      color: currentTab === 'calendar' ? '#1e293b' : '#64748b',
+                      background: currentTab === 'calendar' ? 'var(--color-bg-base)' : 'transparent',
+                      color: currentTab === 'calendar' ? 'var(--color-text-primary)' : 'var(--color-text-secondary)',
                       fontWeight: currentTab === 'calendar' ? 600 : 500,
                       boxShadow: currentTab === 'calendar' ? '0 2px 4px rgba(0,0,0,0.05)' : 'none',
                       cursor: 'pointer',
@@ -190,11 +190,11 @@ function App() {
               <button 
                 onClick={handleLogout}
                 style={{
-                  background: '#ffffff',
-                  border: '1px solid #e2e8f0',
+                  background: 'var(--color-bg-surface)',
+                  border: '1px solid var(--color-border)',
                   padding: '0.4rem 1rem',
                   borderRadius: '20px',
-                  color: '#64748b',
+                  color: 'var(--color-text-secondary)',
                   fontSize: '0.85rem',
                   cursor: 'pointer',
                   fontWeight: 500,

@@ -16,7 +16,9 @@ function App() {
   const [currentTab, setCurrentTab] = useState('write') // 'write' or 'calendar'
   const [calendarViewMode, setCalendarViewMode] = useState('monthly')
   const [bgTheme, setBgTheme] = useState(() => {
-    return localStorage.getItem('zerolog_bg_theme') || 'default';
+    const saved = localStorage.getItem('zerolog_bg_theme');
+    if (saved === 'default' || saved === 'minimal') return 'aurora';
+    return saved || 'aurora';
   });
 
   // Apply Background Theme
@@ -141,11 +143,11 @@ function App() {
               <h1 style={{ 
                 fontSize: '1.5rem', 
                 fontWeight: 700, 
-                color: '#3b82f6',
+                color: 'var(--color-text-primary)',
                 letterSpacing: '-0.03em',
                 margin: 0
               }}>
-                ZeroLog ✨
+                ZeroLog
               </h1>
               
               {!selectedDate && (

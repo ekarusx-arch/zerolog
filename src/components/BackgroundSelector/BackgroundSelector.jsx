@@ -2,12 +2,10 @@ import React, { useState, useRef, useEffect } from 'react';
 import styles from './BackgroundSelector.module.css';
 
 const THEMES = [
-  { id: 'default', name: 'ZeroSlate', color: '#eef2f6' },
   { id: 'aurora', name: 'Aurora', color: 'linear-gradient(135deg, #f0f9ff, #f3e8ff)' },
   { id: 'sunset', name: 'Sunset', color: 'linear-gradient(135deg, #fff1f2, #fdf4ff)' },
   { id: 'ocean', name: 'Ocean', color: 'linear-gradient(135deg, #f0fdfa, #e0f2fe)' },
   { id: 'nature', name: 'Nature', color: 'linear-gradient(135deg, #f0fdf4, #fefce8)' },
-  { id: 'minimal', name: 'Minimal', color: '#f8fafc' },
   { id: 'night', name: 'Night', color: 'linear-gradient(135deg, #0f172a, #1e293b)' },
 ];
 

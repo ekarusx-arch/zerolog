@@ -218,6 +218,24 @@ const ChatReflection = ({ onAddLog, user }) => {
             전송
           </button>
         </form>
+        
+        {/* 하루끝플리 Youtube Player (Placeholder) */}
+        <div className={styles.playerContainer}>
+          <div className={styles.playerHeader}>
+            <span className={styles.playerTitle}>🎵 하루끝플리</span>
+            <span className={styles.playerSubtitle}>음악과 함께 하루를 정리해보세요</span>
+          </div>
+          <iframe 
+            width="100%" 
+            height="80" 
+            src="https://www.youtube.com/embed/jfKfPfyJRdk" 
+            title="하루끝플리 플레이어" 
+            frameBorder="0" 
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+            allowFullScreen
+            style={{ borderRadius: '12px' }}
+          ></iframe>
+        </div>
       </div>
     </div>
   );

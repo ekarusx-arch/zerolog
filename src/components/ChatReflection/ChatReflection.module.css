@@ -196,3 +196,31 @@
 .errorBox code {
   background: var(--color-bg-base);
 }
+
+.playerContainer {
+  margin-top: 1rem;
+  padding: 1rem;
+  background: var(--color-bg-base);
+  border: 1px solid var(--color-border);
+  border-radius: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 0.8rem;
+}
+
+.playerHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.playerTitle {
+  font-weight: 600;
+  color: var(--color-text-primary);
+  font-size: 0.95rem;
+}
+
+.playerSubtitle {
+  font-size: 0.8rem;
+  color: var(--color-text-secondary);
+}

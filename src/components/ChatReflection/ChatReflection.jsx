@@ -228,7 +228,7 @@ const ChatReflection = ({ onAddLog, user }) => {
           <iframe 
             width="100%" 
             height="80" 
-            src="https://www.youtube.com/embed/jfKfPfyJRdk" 
+            src="https://www.youtube.com/embed/eHaxwrKR6to?autoplay=1&loop=1&playlist=eHaxwrKR6to" 
             title="하루끝플리 플레이어" 
             frameBorder="0" 
             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 

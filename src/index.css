@@ -67,20 +67,20 @@ body[data-theme='aurora'] {
 
 /* 3. Sunset Theme */
 body[data-theme='sunset'] {
-  --color-bg-base: #271c19;
-  --color-bg-surface: #3f2c25;
-  --color-text-primary: #f5f5f4;
-  --color-text-secondary: #d6d3d1;
-  --color-border: #5b3e31;
-  --calendar-bg: linear-gradient(-45deg, #3f2c25, #5b3e31, #432c2a, #271c19);
-  --calendar-border: rgba(255, 255, 255, 0.05);
-  --calendar-cell-bg: rgba(255, 255, 255, 0.03);
-  --calendar-cell-border: rgba(255, 255, 255, 0.08);
-  --calendar-cell-hover: rgba(255, 255, 255, 0.08);
-  --calendar-orb1: rgba(217, 119, 6, 0.08);
-  --calendar-orb2: rgba(180, 83, 9, 0.08);
+  --color-bg-base: #2d1313;
+  --color-bg-surface: #4a2119;
+  --color-text-primary: #fffbeb;
+  --color-text-secondary: #fde68a;
+  --color-border: #7c2d12;
+  --calendar-bg: linear-gradient(-45deg, #4a2119, #7c2d12, #6b3529, #2d1313);
+  --calendar-border: rgba(255, 255, 255, 0.06);
+  --calendar-cell-bg: rgba(255, 255, 255, 0.04);
+  --calendar-cell-border: rgba(255, 255, 255, 0.1);
+  --calendar-cell-hover: rgba(255, 255, 255, 0.1);
+  --calendar-orb1: rgba(245, 158, 11, 0.1);
+  --calendar-orb2: rgba(239, 68, 68, 0.1);
 
-  background: linear-gradient(-45deg, #271c19, #3f2c25, #432c2a, #2b1d19, #271c19);
+  background: linear-gradient(-45deg, #2d1313, #572a2a, #6b3529, #4a2119, #2d1313);
   background-size: 400% 400%;
   animation: bgMove 20s ease infinite;
 }
@@ -147,19 +147,19 @@ body[data-theme='midnight'] {
 /* 9. Twilight Theme */
 body[data-theme='twilight'] {
   --color-bg-base: #1e1b4b;
-  --color-bg-surface: #312e81;
+  --color-bg-surface: #2d1b54;
   --color-text-primary: #f8fafc;
-  --color-text-secondary: #cbd5e1;
-  --color-border: #4338ca;
-  --calendar-bg: linear-gradient(-45deg, #1e1b4b, #312e81, #3730a3, #1e1b4b);
-  --calendar-border: rgba(255, 255, 255, 0.05);
-  --calendar-cell-bg: rgba(255, 255, 255, 0.03);
-  --calendar-cell-border: rgba(255, 255, 255, 0.08);
-  --calendar-cell-hover: rgba(255, 255, 255, 0.08);
-  --calendar-orb1: rgba(129, 140, 248, 0.08);
-  --calendar-orb2: rgba(167, 139, 250, 0.08);
+  --color-text-secondary: #ddd6fe;
+  --color-border: #5b21b6;
+  --calendar-bg: linear-gradient(-45deg, #1e1b4b, #40286b, #4c2882, #1e1b4b);
+  --calendar-border: rgba(255, 255, 255, 0.06);
+  --calendar-cell-bg: rgba(255, 255, 255, 0.04);
+  --calendar-cell-border: rgba(255, 255, 255, 0.1);
+  --calendar-cell-hover: rgba(255, 255, 255, 0.1);
+  --calendar-orb1: rgba(167, 139, 250, 0.1);
+  --calendar-orb2: rgba(216, 180, 254, 0.1);
 
-  background: linear-gradient(-45deg, #1e1b4b, #312e81, #2e1065, #17172b, #1e1b4b);
+  background: linear-gradient(-45deg, #1e1b4b, #40286b, #4c2882, #2d1b54, #1e1b4b);
   background-size: 400% 400%;
   animation: bgMove 20s ease infinite;
 }

@@ -67,7 +67,7 @@ body[data-theme='aurora'] {
 
 /* 3. Sunset Theme */
 body[data-theme='sunset'] {
-  background: linear-gradient(-45deg, #fff1f2, #ffe4e6, #fce7f3, #fdf4ff);
+  background: linear-gradient(-45deg, #fff7ed, #ffedd5, #fef3c7, #fefce8);
   background-size: 400% 400%;
   animation: bgMove 20s ease infinite;
 }

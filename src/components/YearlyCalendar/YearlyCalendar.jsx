@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { ChevronLeft, ChevronRight } from 'lucide-react';
 import styles from './YearlyCalendar.module.css';
 
 const MOOD_COLORS = {
@@ -31,9 +32,9 @@ export default function YearlyCalendar({ logs, onDateClick }) {
   return (
     <div className={styles.container}>
       <div className={styles.header}>
-        <button className={styles.navButton} onClick={() => setYear(y => y - 1)}>&lt;</button>
+        <button className={styles.navButton} onClick={() => setYear(y => y - 1)}><ChevronLeft size={20} /></button>
         <h2 className={styles.yearTitle}>{year}년</h2>
-        <button className={styles.navButton} onClick={() => setYear(y => y + 1)}>&gt;</button>
+        <button className={styles.navButton} onClick={() => setYear(y => y + 1)}><ChevronRight size={20} /></button>
       </div>
       
       <div className={styles.monthsGrid}>

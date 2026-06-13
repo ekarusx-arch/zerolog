@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { ChevronLeft, ChevronRight } from 'lucide-react';
 import styles from './MonthlyCalendar.module.css';
 
 const MOOD_COLORS = {
@@ -106,8 +107,8 @@ export default function MonthlyCalendar({ logs, onDateClick }) {
       <div className={styles.header}>
         <h3 className={styles.monthTitle}>{monthName} {year}</h3>
         <div style={{ display: 'flex', gap: '0.5rem' }}>
-          <button className={styles.navButton} onClick={prevMonth}>&lt;</button>
-          <button className={styles.navButton} onClick={nextMonth}>&gt;</button>
+          <button className={styles.navButton} onClick={prevMonth}><ChevronLeft size={20} /></button>
+          <button className={styles.navButton} onClick={nextMonth}><ChevronRight size={20} /></button>
         </div>
       </div>
       

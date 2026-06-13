@@ -32,7 +32,12 @@ export default function BackgroundSelector({ currentTheme, onThemeChange }) {
         onClick={() => setIsOpen(!isOpen)}
         title="배경 테마 변경"
       >
-        <span className={styles.icon}>🎨</span>
+        <span className={styles.icon}>
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--color-text-primary)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+            <circle cx="12" cy="12" r="10" />
+            <path d="M12 2a10 10 0 0 1 0 20z" fill="var(--color-text-primary)" />
+          </svg>
+        </span>
       </button>
 
       {isOpen && (

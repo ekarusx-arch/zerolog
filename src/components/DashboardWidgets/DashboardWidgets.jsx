@@ -158,13 +158,26 @@ export default function DashboardWidgets({ logs }) {
     return days;
   }, [logs]);
 
-  // 7. Activity Heatmap (Last 28 Days)
+  // 7. Activity Heatmap (Last 28 Days) aligned to weekdays
   const heatmapDays = useMemo(() => {
     const days = [];
-    for (let i = 27; i >= 0; i--) {
-      const d = new Date();
-      d.setDate(d.getDate() - i);
-      d.setHours(0,0,0,0);
+    const today = new Date();
+    today.setHours(0,0,0,0);
+    
+    const totalDaysToShow = 28;
+    const startDate = new Date(today);
+    startDate.setDate(today.getDate() - (totalDaysToShow - 1));
+    
+    const startDayOfWeek = startDate.getDay(); // 0 is Sunday
+    
+    // Add empty padding so the first day aligns with its day of week
+    for (let i = 0; i < startDayOfWeek; i++) {
+      days.push({ isPadding: true });
+    }
+    
+    for (let i = totalDaysToShow - 1; i >= 0; i--) {
+      const d = new Date(today);
+      d.setDate(today.getDate() - i);
       
       const log = logs.find(l => {
         const ld = new Date(l.date);
@@ -175,7 +188,8 @@ export default function DashboardWidgets({ logs }) {
       days.push({
         date: d,
         active: !!log,
-        color: log ? MOOD_COLORS[log.mood] : 'var(--border-color)',
+        color: log ? MOOD_COLORS[log.mood] : 'var(--color-border)',
+        isPadding: false
       });
     }
     return days;
@@ -264,15 +278,33 @@ export default function DashboardWidgets({ logs }) {
             <h3>최근 4주 활동 히트맵</h3>
           </div>
           <div className={styles.heatmapContent}>
-            <div className={styles.heatmapGrid}>
-              {heatmapDays.map((day, idx) => (
-                <div 
-                  key={idx} 
-                  className={`${styles.heatmapSquare} ${day.active ? styles.activeSquare : ''}`}
-                  style={{ backgroundColor: day.color }}
-                  title={`${day.date.toLocaleDateString()} - ${day.active ? '기록됨' : '비어있음'}`}
-                ></div>
-              ))}
+            <div className={styles.heatmapWrapper}>
+              <div className={styles.heatmapLabels}>
+                <span>일</span>
+                <span></span>
+                <span>화</span>
+                <span></span>
+                <span>목</span>
+                <span></span>
+                <span>토</span>
+              </div>
+              <div className={styles.heatmapGrid}>
+                {heatmapDays.map((day, idx) => (
+                  day.isPadding ? (
+                    <div key={idx} className={styles.heatmapSquarePadding}></div>
+                  ) : (
+                    <div 
+                      key={idx} 
+                      className={`${styles.heatmapSquare} ${day.active ? styles.activeSquare : ''}`}
+                      style={{ backgroundColor: day.color }}
+                      title={`${day.date.toLocaleDateString()} - ${day.active ? '기록됨' : '비어있음'}`}
+                    ></div>
+                  )
+                ))}
+              </div>
+            </div>
+            <div className={styles.heatmapLegend}>
+              <span>마우스를 올려 날짜를 확인하세요</span>
             </div>
           </div>
         </div>

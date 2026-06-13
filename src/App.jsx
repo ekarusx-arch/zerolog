@@ -243,11 +243,8 @@ function App() {
                     <RetrospectiveTopics />
                   </div>
                 </div>
-                {/* 2열: 대시보드 위젯 + 유튜브 플리 */}
+                {/* 2열: 유튜브 플리 + 대시보드 위젯 */}
                 <div style={{ display: currentTab === 'write' ? 'flex' : 'none', flexDirection: 'column', height: '100%', minHeight: 0, gap: '1.5rem' }}>
-                  <div style={{ flex: 1, overflowY: 'auto', paddingRight: '0.5rem', overflowX: 'hidden' }}>
-                    <DashboardWidgets logs={logs} />
-                  </div>
                   <div style={{ 
                     flexShrink: 0, 
                     background: 'var(--color-bg-base)', 
@@ -271,6 +268,9 @@ function App() {
                       allowFullScreen
                       style={{ borderRadius: '12px', aspectRatio: '16/9', height: 'auto' }}
                     ></iframe>
+                  </div>
+                  <div style={{ flex: 1, minHeight: 0, overflowY: 'auto', paddingRight: '0.5rem', overflowX: 'hidden' }}>
+                    <DashboardWidgets logs={logs} />
                   </div>
                 </div>
                 

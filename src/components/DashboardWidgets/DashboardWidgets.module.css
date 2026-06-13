@@ -98,11 +98,11 @@
 
 /* Doughnut */
 .doughnutContent { flex: 1; display: flex; flex-direction: column; justify-content: center; align-items: center; }
-.doughnutWrapper { display: flex; align-items: center; justify-content: center; gap: 1rem; width: 100%; flex-wrap: wrap; }
-.doughnutChart { width: 65px; height: 65px; border-radius: 50%; display: flex; align-items: center; justify-content: center; transition: transform 0.3s ease; box-shadow: 0 4px 15px rgba(0,0,0,0.05); }
+.doughnutWrapper { display: flex; align-items: center; justify-content: center; gap: 0.6rem; width: 100%; flex-wrap: wrap; }
+.doughnutChart { width: 50px; height: 50px; border-radius: 50%; display: flex; align-items: center; justify-content: center; transition: transform 0.3s ease; box-shadow: 0 4px 15px rgba(0,0,0,0.05); }
 .doughnutChart:hover { transform: scale(1.05); }
-.doughnutHole { width: 40px; height: 40px; background: var(--color-bg-surface); border-radius: 50%; display: flex; align-items: center; justify-content: center; box-shadow: inset 0 4px 10px rgba(0,0,0,0.05); }
-.doughnutTotal { font-size: 0.75rem; font-weight: 700; color: var(--color-text-primary); }
+.doughnutHole { width: 30px; height: 30px; background: var(--color-bg-surface); border-radius: 50%; display: flex; align-items: center; justify-content: center; box-shadow: inset 0 4px 10px rgba(0,0,0,0.05); }
+.doughnutTotal { font-size: 0.7rem; font-weight: 700; color: var(--color-text-primary); }
 .doughnutLegend { display: flex; flex-direction: column; gap: 0.3rem; }
 .legendItem { display: flex; align-items: center; gap: 0.4rem; font-size: 0.75rem; }
 .legendColor { width: 8px; height: 8px; border-radius: 50%; box-shadow: 0 2px 4px rgba(0,0,0,0.1); }
@@ -112,14 +112,14 @@
 /* Heatmap */
 .heatmapContent { flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 0; }
 .heatmapWrapper { display: flex; gap: 0.4rem; align-items: flex-end; }
-.heatmapLabels { display: grid; grid-template-rows: repeat(7, 1fr); gap: 2px; font-size: 0.6rem; color: var(--color-text-secondary); text-align: right; }
-.heatmapLabels span { height: 12px; line-height: 12px; }
+.heatmapLabels { display: grid; grid-template-rows: repeat(7, 1fr); gap: 2px; font-size: 0.55rem; color: var(--color-text-secondary); text-align: right; }
+.heatmapLabels span { height: 10px; line-height: 10px; }
 .heatmapGrid { display: grid; grid-template-rows: repeat(7, 1fr); grid-auto-flow: column; gap: 2px; }
-.heatmapSquare { width: 12px; height: 12px; border-radius: 2px; transition: transform 0.2s ease, opacity 0.2s ease; background-color: var(--color-bg-base); border: 1px solid var(--color-border); }
-.heatmapSquarePadding { width: 12px; height: 12px; background: transparent; }
+.heatmapSquare { width: 10px; height: 10px; border-radius: 2px; transition: transform 0.2s ease, opacity 0.2s ease; background-color: var(--color-bg-base); border: 1px solid var(--color-border); }
+.heatmapSquarePadding { width: 10px; height: 10px; background: transparent; }
 .activeSquare { opacity: 1; box-shadow: 0 1px 2px rgba(0,0,0,0.1); border-color: transparent; }
 .heatmapSquare:hover { transform: scale(1.2); z-index: 10; opacity: 1; cursor: pointer; }
-.heatmapLegend { margin-top: 0.8rem; font-size: 0.75rem; color: var(--color-text-secondary); opacity: 0.7; }
+.heatmapLegend { margin-top: 0.4rem; font-size: 0.7rem; color: var(--color-text-secondary); opacity: 0.7; }
 
 [data-theme="dark"] .bestMomentContent { background: rgba(0,0,0,0.2); }
 [data-theme="dark"] .heatmapSquare { border: 1px solid rgba(255,255,255,0.05); }

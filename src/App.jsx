@@ -244,7 +244,7 @@ function App() {
                   </div>
                 </div>
                 {/* 2열: 유튜브 플리 + 대시보드 위젯 */}
-                <div style={{ display: currentTab === 'write' ? 'flex' : 'none', flexDirection: 'column', height: '100%', minHeight: 0, gap: '1.5rem' }}>
+                <div style={{ display: currentTab === 'write' ? 'flex' : 'none', flexDirection: 'column', height: '100%', minHeight: 0, gap: '1rem' }}>
                   <div style={{ 
                     flexShrink: 0, 
                     background: 'var(--color-bg-base)', 

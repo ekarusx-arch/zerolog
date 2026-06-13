@@ -106,7 +106,7 @@ body[data-theme='night'] {
   --calendar-orb1: rgba(59, 130, 246, 0.1);
   --calendar-orb2: rgba(139, 92, 246, 0.1);
 
-  background: linear-gradient(-45deg, #0f172a, #1e293b, #020617);
+  background: linear-gradient(-45deg, #0f172a, #172554, #064e3b, #1e1b4b, #020617);
   background-size: 400% 400%;
   animation: bgMove 20s ease infinite;
 }

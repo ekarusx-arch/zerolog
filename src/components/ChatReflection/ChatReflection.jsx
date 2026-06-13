@@ -227,13 +227,12 @@ const ChatReflection = ({ onAddLog, user }) => {
           </div>
           <iframe 
             width="100%" 
-            height="80" 
             src="https://www.youtube.com/embed/eHaxwrKR6to?autoplay=1&loop=1&playlist=eHaxwrKR6to" 
             title="하루끝플리 플레이어" 
             frameBorder="0" 
             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
             allowFullScreen
-            style={{ borderRadius: '12px' }}
+            style={{ borderRadius: '12px', aspectRatio: '16/9', height: 'auto' }}
           ></iframe>
         </div>
       </div>

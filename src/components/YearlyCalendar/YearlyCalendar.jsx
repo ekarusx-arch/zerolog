@@ -32,9 +32,9 @@ export default function YearlyCalendar({ logs, onDateClick }) {
   return (
     <div className={styles.container}>
       <div className={styles.header}>
-        <button className={styles.navButton} onClick={() => setYear(y => y - 1)}><ChevronLeft size={20} /></button>
+        <button className={styles.navButton} onClick={() => setYear(y => y - 1)} aria-label="이전 해"><ChevronLeft size={20} /></button>
         <h2 className={styles.yearTitle}>{year}년</h2>
-        <button className={styles.navButton} onClick={() => setYear(y => y + 1)}><ChevronRight size={20} /></button>
+        <button className={styles.navButton} onClick={() => setYear(y => y + 1)} aria-label="다음 해"><ChevronRight size={20} /></button>
       </div>
       
       <div className={styles.monthsGrid}>
@@ -52,15 +52,18 @@ export default function YearlyCalendar({ logs, onDateClick }) {
             const logForDay = logsByDate[dateStr];
             
             cells.push(
-              <div 
+              <button
+                type="button"
                 key={day} 
                 className={`${styles.dayCell} ${logForDay ? styles.hasLog : ''}`}
                 style={logForDay ? { backgroundColor: MOOD_COLORS[logForDay.mood] } : undefined}
                 title={logForDay ? `${dateStr} - ${logForDay.mood}` : dateStr}
                 onClick={() => logForDay && onDateClick && onDateClick(dateStr)}
+                disabled={!logForDay}
+                aria-label={logForDay ? `${dateStr} 회고 보기` : `${dateStr} 기록 없음`}
               >
                 {day}
-              </div>
+              </button>
             );
           }
 

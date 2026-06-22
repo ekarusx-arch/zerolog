@@ -48,6 +48,14 @@ body {
   min-height: 100vh;
   -webkit-font-smoothing: antialiased;
   transition: background-color 0.8s ease;
+  overflow: hidden;
+  overscroll-behavior: none;
+}
+
+button,
+a,
+input {
+  -webkit-tap-highlight-color: transparent;
 }
 
 /* 1. Default Theme */
@@ -151,6 +159,42 @@ button {
 input, textarea {
   font-family: inherit;
   outline: none;
+}
+
+.auth-shell {
+  position: relative;
+  display: flex;
+  flex: 1;
+  min-height: 0;
+}
+
+.auth-suite-link {
+  position: absolute;
+  z-index: 10;
+  top: 0;
+  left: 0;
+}
+
+@media (max-width: 760px) {
+  html,
+  body,
+  #root {
+    min-height: 100%;
+  }
+
+  body {
+    overflow-x: hidden;
+    overflow-y: auto;
+    overscroll-behavior-y: auto;
+  }
+
+  .auth-shell {
+    min-height: calc(100svh - env(safe-area-inset-top) - env(safe-area-inset-bottom));
+  }
+
+  .auth-suite-link {
+    top: max(0px, env(safe-area-inset-top));
+  }
 }
 
 /* Scrollbar customization */

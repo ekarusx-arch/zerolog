@@ -22,7 +22,7 @@ const SUMMARY_PROMPT = `
 }
 `;
 
-const ChatReflection = ({ onAddLog, user }) => {
+const ChatReflection = ({ onAddLog, user, entryDate }) => {
   const [messages, setMessages] = useState([]);
   const [inputText, setInputText] = useState('');
   const [isTyping, setIsTyping] = useState(false);
@@ -31,19 +31,13 @@ const ChatReflection = ({ onAddLog, user }) => {
   const [isFinished, setIsFinished] = useState(false);
   const maxTurns = 3;
   
-  const messagesEndRef = useRef(null);
-  const inputRef = useRef(null);
+  const chatAreaRef = useRef(null);
 
   useEffect(() => {
-    messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
-  }, [messages, isTyping]);
-
-  // Re-focus the input automatically when the AI finishes typing
-  useEffect(() => {
-    if (!isTyping && !isFinished && inputRef.current) {
-      inputRef.current.focus();
+    if (chatAreaRef.current) {
+      chatAreaRef.current.scrollTop = chatAreaRef.current.scrollHeight;
     }
-  }, [isTyping, isFinished]);
+  }, [messages, isTyping]);
 
   useEffect(() => {
     const apiKey = import.meta.env.VITE_GEMINI_API_KEY;
@@ -124,7 +118,7 @@ const ChatReflection = ({ onAddLog, user }) => {
 
       const newLogData = {
         user_id: user.id,
-        date: new Date().toISOString(),
+        date: entryDate ? new Date(`${entryDate}T12:00:00`).toISOString() : new Date().toISOString(),
         mood: summaryData.mood || 'okay',
         q1: summaryData.q1 || '기록 없음',
         q2: summaryData.q2 || '기록 없음',
@@ -182,7 +176,7 @@ const ChatReflection = ({ onAddLog, user }) => {
         </div>
       </div>
 
-      <div className={styles.chatArea}>
+      <div className={styles.chatArea} ref={chatAreaRef}>
         {messages.map((msg, idx) => (
           <div key={idx} className={`${styles.messageWrapper} ${msg.role === 'user' ? styles.isUser : styles.isModel}`}>
             {msg.role === 'model' && <div className={styles.messageAvatar}>✨</div>}
@@ -199,20 +193,17 @@ const ChatReflection = ({ onAddLog, user }) => {
             </div>
           </div>
         )}
-        <div ref={messagesEndRef} />
       </div>
 
       <div className={styles.inputArea}>
         <form onSubmit={handleSendMessage} className={styles.form}>
           <input
-            ref={inputRef}
             type="text"
             className={styles.input}
             value={inputText}
             onChange={(e) => setInputText(e.target.value)}
             placeholder="오늘 하루에 대해 이야기해주세요..."
             disabled={isTyping || isFinished}
-            autoFocus
           />
           <button type="submit" className={styles.sendButton} disabled={!inputText.trim() || isTyping || isFinished}>
             전송

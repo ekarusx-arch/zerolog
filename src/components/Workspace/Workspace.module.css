@@ -1,0 +1,299 @@
+.appShell {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  width: 100%;
+  min-height: 0;
+}
+.header {
+  display: flex;
+  flex: 0 0 auto;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-bottom: 0.8rem;
+}
+.brandGroup, .headerActions, .brand, .playlistTitle {
+  display: flex;
+  align-items: center;
+}
+.brandGroup { min-width: 0; gap: 0.8rem; }
+.brand { gap: 0.55rem; }
+.brandMark {
+  display: grid;
+  width: 38px;
+  height: 38px;
+  flex: 0 0 38px;
+  place-items: center;
+  border-radius: 10px;
+  background: #2563eb;
+  color: #fff;
+  font-size: 1.15rem;
+  font-weight: 800;
+}
+.brand h1 {
+  margin: 0;
+  color: var(--color-text-primary);
+  font-size: 1.45rem;
+  font-weight: 700;
+  letter-spacing: 0;
+}
+.headerActions { justify-content: flex-end; gap: 0.6rem; }
+.dateChip {
+  max-width: 180px;
+  overflow: hidden;
+  padding: 0.48rem 0.7rem;
+  border: 1px solid var(--color-border);
+  border-radius: 8px;
+  background: var(--color-bg-surface);
+  color: var(--color-text-secondary);
+  font-size: 0.8rem;
+  font-weight: 700;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.mobileDateContext { display: none; }
+.logoutButton {
+  display: inline-flex;
+  min-height: 40px;
+  align-items: center;
+  justify-content: center;
+  gap: 0.45rem;
+  padding: 0.52rem 0.78rem;
+  border: 1px solid var(--color-border);
+  border-radius: 10px;
+  background: var(--color-bg-surface);
+  color: var(--color-text-secondary);
+  font-size: 0.82rem;
+  font-weight: 600;
+}
+.tabs {
+  display: flex;
+  width: max-content;
+  flex: 0 0 auto;
+  gap: 0.25rem;
+  margin: 0 0 0.9rem;
+  padding: 0.25rem;
+  border: 1px solid var(--color-border);
+  border-radius: 12px;
+  background: var(--color-bg-surface);
+}
+.tabButton {
+  display: inline-flex;
+  min-height: 40px;
+  align-items: center;
+  justify-content: center;
+  gap: 0.45rem;
+  padding: 0.5rem 0.85rem;
+  border-radius: 9px;
+  background: transparent;
+  color: var(--color-text-secondary);
+  font-size: 0.86rem;
+  font-weight: 600;
+  transition: background 180ms ease, color 180ms ease, transform 180ms ease;
+}
+.tabButton:active { transform: scale(0.98); }
+.activeTab {
+  background: var(--color-bg-base);
+  color: var(--color-text-primary);
+  box-shadow: 0 2px 8px rgba(2, 6, 23, 0.08);
+}
+.workspace {
+  display: flex;
+  flex: 1;
+  min-height: 0;
+}
+.loading {
+  width: 100%;
+  padding: 2rem;
+  color: var(--color-text-secondary);
+  text-align: center;
+}
+.writeGrid {
+  display: grid;
+  width: 100%;
+  min-height: 0;
+  grid-template-columns: minmax(320px, 1fr) minmax(320px, 1fr);
+  gap: 1.2rem;
+  animation: contentIn 260ms ease both;
+}
+.primaryColumn, .secondaryColumn {
+  display: flex;
+  min-width: 0;
+  min-height: 0;
+  flex-direction: column;
+  gap: 1rem;
+}
+.chatPanel {
+  display: flex;
+  flex: 1;
+  min-height: 320px;
+  flex-direction: column;
+}
+.playlist {
+  display: flex;
+  flex: 0 0 auto;
+  flex-direction: column;
+  gap: 0.75rem;
+  padding: 0.9rem;
+  border: 1px solid var(--color-border);
+  border-radius: 12px;
+  background: var(--color-bg-surface);
+}
+.playlistHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+}
+.playlistTitle {
+  gap: 0.45rem;
+  color: var(--color-text-primary);
+}
+.playlistTitle h2 {
+  margin: 0;
+  font-size: 0.95rem;
+  font-weight: 700;
+}
+.playlistHeader > span {
+  color: var(--color-text-secondary);
+  font-size: 0.76rem;
+  text-align: right;
+}
+.playlist iframe {
+  width: 100%;
+  height: auto;
+  border-radius: 8px;
+  aspect-ratio: 16 / 9;
+}
+.insightScroll {
+  flex: 1;
+  min-height: 0;
+  overflow: auto;
+  padding-right: 0.25rem;
+}
+.calendarPanel, .dayView {
+  width: 100%;
+  min-height: 0;
+  animation: contentIn 260ms ease both;
+}
+.dayView {
+  max-width: 800px;
+  margin: 0 auto;
+}
+@keyframes contentIn {
+  from { opacity: 0; transform: translateY(6px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+@media (max-width: 760px) {
+  .appShell {
+    min-height: 100%;
+  }
+  .header {
+    position: sticky;
+    z-index: 50;
+    top: 0;
+    align-items: flex-start;
+    margin: 0 -0.75rem 0.65rem;
+    padding: max(0.65rem, env(safe-area-inset-top)) 0.75rem 0.65rem;
+    border-bottom: 1px solid var(--color-border);
+    background: color-mix(in srgb, var(--color-bg-base) 88%, transparent);
+    backdrop-filter: blur(18px);
+    -webkit-backdrop-filter: blur(18px);
+  }
+  .brandGroup {
+    gap: 0.55rem;
+  }
+  .brandMark {
+    display: none;
+  }
+  .brand h1 {
+    font-size: 1.2rem;
+  }
+  .headerActions {
+    flex-wrap: wrap;
+    gap: 0.4rem;
+  }
+  .dateChip {
+    display: none;
+  }
+  .logoutButton {
+    width: 40px;
+    height: 40px;
+    padding: 0;
+  }
+  .logoutButton span {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+    white-space: nowrap;
+  }
+  .tabs {
+    position: sticky;
+    z-index: 40;
+    top: calc(max(0.65rem, env(safe-area-inset-top)) + 54px);
+    width: 100%;
+    margin-bottom: 0.85rem;
+    background: color-mix(in srgb, var(--color-bg-surface) 94%, transparent);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+  }
+  .mobileDateContext {
+    display: flex; min-height: 36px; align-items: center;
+    gap: 0.4rem; margin: -0.25rem 0 0.75rem; padding: 0.45rem 0.65rem;
+    border: 1px solid var(--color-border);
+    border-radius: 9px;
+    background: var(--color-bg-surface); color: var(--color-text-secondary);
+    font-size: 0.8rem; font-weight: 700;
+  }
+  .tabButton {
+    flex: 1;
+    min-width: 0;
+    padding-inline: 0.55rem;
+  }
+  .workspace {
+    display: block;
+    min-height: 0;
+  }
+  .writeGrid {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+  .primaryColumn, .secondaryColumn {
+    overflow: visible;
+  }
+  .chatPanel {
+    height: min(620px, calc(100svh - 168px));
+    min-height: 480px;
+    flex: none;
+  }
+  .mobileDateContext + .workspace .chatPanel {
+    height: min(600px, calc(100svh - 212px));
+    min-height: 440px;
+  }
+  .playlist {
+    padding: 0.8rem;
+  }
+  .playlistHeader {
+    align-items: flex-start;
+  }
+  .playlistHeader > span {
+    max-width: 145px;
+  }
+  .insightScroll,
+  .calendarPanel,
+  .dayView {
+    overflow: visible;
+  }
+}
+@media (max-width: 360px) {
+  .brand h1 {
+    display: none;
+  }
+  .playlistHeader > span {
+    display: none;
+  }
+}

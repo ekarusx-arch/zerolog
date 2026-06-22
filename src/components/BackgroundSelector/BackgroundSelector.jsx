@@ -30,6 +30,8 @@ export default function BackgroundSelector({ currentTheme, onThemeChange }) {
         className={`${styles.toggleButton} ${isOpen ? styles.active : ''}`}
         onClick={() => setIsOpen(!isOpen)}
         title="배경 테마 변경"
+        aria-label="배경 테마 변경"
+        aria-expanded={isOpen}
       >
         <span className={styles.icon}>
           <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--color-text-primary)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">

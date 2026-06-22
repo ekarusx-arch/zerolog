@@ -10,7 +10,7 @@ const MOOD_COLORS = {
   awful: '#8b5cf6',
 };
 
-const DAY_NAMES = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+const DAY_NAMES = ['일', '월', '화', '수', '목', '금', '토'];
 
 export default function MonthlyCalendar({ logs, onDateClick }) {
   const [currentDate, setCurrentDate] = useState(new Date());
@@ -37,7 +37,7 @@ export default function MonthlyCalendar({ logs, onDateClick }) {
     setCurrentDate(new Date(year, month + 1, 1));
   };
 
-  const monthName = currentDate.toLocaleString('en-US', { month: 'long' });
+  const monthName = `${month + 1}월`;
 
   // Map logs by date string (YYYY-MM-DD)
   const logsByDate = {};
@@ -70,10 +70,13 @@ export default function MonthlyCalendar({ logs, onDateClick }) {
       const logForDay = logsByDate[dateStr];
 
       cells.push(
-        <div 
+        <button
+          type="button"
           key={day} 
           className={`${styles.dateCell} ${isToday(day) ? styles.today : ''} ${logForDay ? styles.hasLog : ''}`} 
           onClick={() => logForDay && onDateClick && onDateClick(dateStr)}
+          disabled={!logForDay}
+          aria-label={logForDay ? `${dateStr} 회고 보기` : `${dateStr} 기록 없음`}
         >
           <span className={styles.dateNumber}>{day}</span>
           {logForDay && (
@@ -88,7 +91,7 @@ export default function MonthlyCalendar({ logs, onDateClick }) {
               </div>
             </div>
           )}
-        </div>
+        </button>
       );
     }
 
@@ -107,8 +110,8 @@ export default function MonthlyCalendar({ logs, onDateClick }) {
       <div className={styles.header}>
         <h3 className={styles.monthTitle}>{monthName} {year}</h3>
         <div style={{ display: 'flex', gap: '0.5rem' }}>
-          <button className={styles.navButton} onClick={prevMonth}><ChevronLeft size={20} /></button>
-          <button className={styles.navButton} onClick={nextMonth}><ChevronRight size={20} /></button>
+          <button className={styles.navButton} onClick={prevMonth} aria-label="이전 달"><ChevronLeft size={20} /></button>
+          <button className={styles.navButton} onClick={nextMonth} aria-label="다음 달"><ChevronRight size={20} /></button>
         </div>
       </div>
       

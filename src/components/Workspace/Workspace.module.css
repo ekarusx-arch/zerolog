@@ -13,11 +13,26 @@
   gap: 1rem;
   margin-bottom: 0.8rem;
 }
-.brandGroup, .headerActions, .brand, .playlistTitle {
+.brandGroup, .headerActions, .brand, .titleCluster, .playlistTitle {
   display: flex;
   align-items: center;
 }
+
+.proBadge {
+  border-radius: 999px;
+  background: #f59e0b;
+  color: #fff;
+  font-size: 0.62rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  padding: 0.2rem 0.42rem;
+}
 .brandGroup { min-width: 0; gap: 0.8rem; }
+.titleCluster {
+  min-width: 0;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+}
 .brand { gap: 0.55rem; }
 .brandMark {
   display: grid;
@@ -72,7 +87,7 @@
   width: max-content;
   flex: 0 0 auto;
   gap: 0.25rem;
-  margin: 0 0 0.9rem;
+  margin: 0;
   padding: 0.25rem;
   border: 1px solid var(--color-border);
   border-radius: 12px;
@@ -97,6 +112,9 @@
   background: var(--color-bg-base);
   color: var(--color-text-primary);
   box-shadow: 0 2px 8px rgba(2, 6, 23, 0.08);
+}
+.mobileTabs {
+  display: none;
 }
 .workspace {
   display: flex;
@@ -177,6 +195,11 @@
   min-height: 0;
   animation: contentIn 260ms ease both;
 }
+.calendarPanel {
+  display: flex;
+  flex: 1;
+  overflow: hidden;
+}
 .dayView {
   max-width: 800px;
   margin: 0 auto;
@@ -184,6 +207,29 @@
 @keyframes contentIn {
   from { opacity: 0; transform: translateY(6px); }
   to { opacity: 1; transform: translateY(0); }
+}
+@media (max-width: 1023px), (hover: none) and (pointer: coarse) {
+  .workspace {
+    display: block;
+    overflow: visible;
+  }
+  .writeGrid {
+    min-height: auto;
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .chatPanel {
+    min-height: 480px;
+    max-height: min(720px, calc(100svh - 12.5rem));
+    flex: none;
+  }
+  .insightScroll,
+  .calendarPanel,
+  .dayView {
+    overflow: visible;
+  }
+  .calendarPanel {
+    display: block;
+  }
 }
 @media (max-width: 760px) {
   .appShell {
@@ -193,7 +239,7 @@
     position: sticky;
     z-index: 50;
     top: 0;
-    align-items: flex-start;
+    align-items: center;
     margin: 0 -0.75rem 0.65rem;
     padding: max(0.65rem, env(safe-area-inset-top)) 0.75rem 0.65rem;
     border-bottom: 1px solid var(--color-border);
@@ -203,6 +249,23 @@
   }
   .brandGroup {
     gap: 0.55rem;
+    flex: 1;
+  }
+  .titleCluster {
+    flex: 1;
+    align-items: center;
+    gap: 0.55rem;
+  }
+  .desktopTabs {
+    display: none;
+  }
+  .mobileTabs {
+    display: flex;
+    width: 100%;
+    margin: -0.25rem 0 0.65rem;
+    background: color-mix(in srgb, var(--color-bg-surface) 94%, transparent);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
   }
   .brandMark {
     display: none;
@@ -230,16 +293,6 @@
     clip: rect(0 0 0 0);
     white-space: nowrap;
   }
-  .tabs {
-    position: sticky;
-    z-index: 40;
-    top: calc(max(0.65rem, env(safe-area-inset-top)) + 54px);
-    width: 100%;
-    margin-bottom: 0.85rem;
-    background: color-mix(in srgb, var(--color-bg-surface) 94%, transparent);
-    backdrop-filter: blur(16px);
-    -webkit-backdrop-filter: blur(16px);
-  }
   .mobileDateContext {
     display: flex; min-height: 36px; align-items: center;
     gap: 0.4rem; margin: -0.25rem 0 0.75rem; padding: 0.45rem 0.65rem;
@@ -266,13 +319,11 @@
     overflow: visible;
   }
   .chatPanel {
-    height: min(620px, calc(100svh - 168px));
-    min-height: 480px;
-    flex: none;
+    min-height: 0;
+    max-height: none;
   }
   .mobileDateContext + .workspace .chatPanel {
-    height: min(600px, calc(100svh - 212px));
-    min-height: 440px;
+    max-height: none;
   }
   .playlist {
     padding: 0.8rem;
@@ -282,11 +333,6 @@
   }
   .playlistHeader > span {
     max-width: 145px;
-  }
-  .insightScroll,
-  .calendarPanel,
-  .dayView {
-    overflow: visible;
   }
 }
 @media (max-width: 360px) {

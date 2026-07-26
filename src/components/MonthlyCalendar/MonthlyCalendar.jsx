@@ -28,6 +28,7 @@ export default function MonthlyCalendar({ logs, onDateClick }) {
 
   const daysInMonth = getDaysInMonth(year, month);
   const firstDay = getFirstDayOfMonth(year, month);
+  const weekCount = Math.ceil((firstDay + daysInMonth) / 7);
 
   const prevMonth = () => {
     setCurrentDate(new Date(year, month - 1, 1));
@@ -115,10 +116,15 @@ export default function MonthlyCalendar({ logs, onDateClick }) {
         </div>
       </div>
       
-      <div className={styles.grid}>
+      <div className={styles.weekdays}>
         {DAY_NAMES.map(day => (
           <div key={day} className={styles.dayName}>{day}</div>
         ))}
+      </div>
+      <div
+        className={styles.grid}
+        style={{ gridTemplateRows: `repeat(${weekCount}, minmax(0, 1fr))` }}
+      >
         {renderCells()}
       </div>
     </div>

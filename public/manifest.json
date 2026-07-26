@@ -1,0 +1,22 @@
+{
+  "id": "/",
+  "name": "ZeroLog",
+  "short_name": "ZeroLog",
+  "description": "하루의 감정과 생각을 차분하게 기록하는 회고 도구입니다.",
+  "lang": "ko-KR",
+  "start_url": "/?source=pwa",
+  "scope": "/",
+  "display": "standalone",
+  "display_override": ["standalone", "minimal-ui"],
+  "orientation": "any",
+  "background_color": "#0f172a",
+  "theme_color": "#0f172a",
+  "icons": [
+    {
+      "src": "/apple-touch-icon.png",
+      "sizes": "1024x1024",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ]
+}

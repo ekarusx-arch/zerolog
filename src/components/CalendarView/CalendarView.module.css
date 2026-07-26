@@ -1,37 +1,15 @@
 .container {
   display: flex;
   flex-direction: column;
+  width: 100%;
   height: 100%;
-  gap: 1.5rem;
-}
-
-@media (max-width: 760px) {
-  .container {
-    height: auto;
-    gap: 0.85rem;
-  }
-
-  .toggleGroup {
-    width: 100%;
-    border-radius: 12px;
-  }
-
-  .toggleButton {
-    min-height: 42px;
-    flex: 1;
-    padding: 0.55rem 0.75rem;
-    border-radius: 9px;
-    font-size: 0.88rem;
-  }
-
-  .viewContent {
-    display: block;
-    flex: none;
-  }
+  min-height: 0;
+  gap: 0.75rem;
 }
 
 .toggleWrapper {
   display: flex;
+  flex: 0 0 auto;
   justify-content: center;
   align-items: center;
 }
@@ -71,4 +49,29 @@
   min-height: 0;
   display: flex;
   flex-direction: column;
+}
+
+@media (max-width: 760px) {
+  .container {
+    height: auto;
+    gap: 0.85rem;
+  }
+
+  .toggleGroup {
+    width: 100%;
+    border-radius: 12px;
+  }
+
+  .toggleButton {
+    min-height: 42px;
+    flex: 1;
+    padding: 0.55rem 0.75rem;
+    border-radius: 9px;
+    font-size: 0.88rem;
+  }
+
+  .viewContent {
+    display: block;
+    flex: none;
+  }
 }

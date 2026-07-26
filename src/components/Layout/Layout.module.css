@@ -1,10 +1,11 @@
 .container {
-  height: 100dvh;
+  min-height: 100dvh;
   min-height: 100svh;
   width: 100%;
   display: flex;
+  align-items: stretch;
   justify-content: center;
-  padding: 2rem 1.5rem;
+  padding: 1.15rem 1.5rem 1.25rem;
   overflow: hidden;
 }
 
@@ -17,12 +18,13 @@
   min-height: 0;
 }
 
-@media (max-width: 800px) {
+/* Preserve an outer document scroll through the iPad breakpoint. */
+@media (max-width: 1023px), (hover: none) and (pointer: coarse) and (min-width: 769px) {
   .container {
     height: auto;
     min-height: 100svh;
     align-items: stretch;
-    padding: 0 0.75rem max(0.75rem, env(safe-area-inset-bottom));
+    padding: max(0.75rem, env(safe-area-inset-top)) 0.75rem max(0.75rem, env(safe-area-inset-bottom));
     overflow: visible;
   }
 

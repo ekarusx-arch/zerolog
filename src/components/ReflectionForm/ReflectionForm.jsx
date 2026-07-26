@@ -2,9 +2,9 @@ import { useState, useRef } from 'react';
 import styles from './ReflectionForm.module.css';
 import MoodSelector from '../MoodSelector/MoodSelector';
 import SoundtrackInput from '../SoundtrackInput/SoundtrackInput';
-import { supabase } from '../../lib/supabaseClient';
+import { createZeroLogEntry } from '../../lib/zeroSlateApi';
 
-const ReflectionForm = ({ onAddLog, user, overrideDate }) => {
+const ReflectionForm = ({ accessToken, onAddLog, user, overrideDate }) => {
   const [mood, setMood] = useState(null);
   const [q1, setQ1] = useState('');
   const [q2, setQ2] = useState('');
@@ -105,17 +105,12 @@ const ReflectionForm = ({ onAddLog, user, overrideDate }) => {
         soundtrack: soundtrack || null
       };
 
-      const { data, error } = await supabase
-        .from('zerolog_entries')
-        .insert([newLogData])
-        .select()
-        .single();
-
-      if (error) {
+      try {
+        const data = await createZeroLogEntry(accessToken, newLogData);
+        if (data) onAddLog(data);
+      } catch (error) {
         console.error("Error inserting log:", error);
         alert("기록을 저장하는 중 오류가 발생했습니다.");
-      } else if (data) {
-        onAddLog(data);
       }
       
       // Reset form

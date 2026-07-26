@@ -48,8 +48,13 @@ body {
   min-height: 100vh;
   -webkit-font-smoothing: antialiased;
   transition: background-color 0.8s ease;
-  overflow: hidden;
-  overscroll-behavior: none;
+  overflow-x: hidden;
+  overflow-y: auto;
+  overscroll-behavior-y: auto;
+}
+
+#root {
+  min-height: 100vh;
 }
 
 button,
@@ -175,7 +180,75 @@ input, textarea {
   left: 0;
 }
 
-@media (max-width: 760px) {
+.closed-shell {
+  position: relative;
+  display: flex;
+  flex: 1;
+  min-height: 0;
+  align-items: center;
+  justify-content: center;
+  padding: 4rem 1rem;
+}
+
+.closed-card {
+  width: min(100%, 520px);
+  border: 1px solid rgba(148, 163, 184, 0.28);
+  border-radius: 24px;
+  background: color-mix(in srgb, var(--color-bg-surface) 88%, transparent);
+  box-shadow: 0 30px 90px rgba(15, 23, 42, 0.16);
+  padding: 2rem;
+  text-align: center;
+  backdrop-filter: blur(18px);
+}
+
+.closed-badge {
+  display: inline-flex;
+  min-height: 2rem;
+  align-items: center;
+  border-radius: 999px;
+  background: rgba(59, 130, 246, 0.12);
+  color: #2563eb;
+  padding: 0 0.85rem;
+  font-size: 0.72rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.closed-card h1 {
+  margin-top: 1rem;
+  font-size: clamp(2rem, 6vw, 3.4rem);
+  line-height: 1.04;
+  letter-spacing: -0.05em;
+}
+
+.closed-card p {
+  margin: 1rem auto 0;
+  max-width: 340px;
+  color: var(--color-text-secondary);
+  font-size: 1rem;
+  font-weight: 600;
+  line-height: 1.7;
+}
+
+.closed-return {
+  display: inline-flex;
+  height: 44px;
+  align-items: center;
+  justify-content: center;
+  margin-top: 1.5rem;
+  border-radius: 14px;
+  background: var(--color-text-primary);
+  color: var(--color-bg-surface);
+  padding: 0 1.15rem;
+  font-size: 0.9rem;
+  font-weight: 800;
+  text-decoration: none;
+}
+
+/* Let iPad use the document scroll instead of trapping scroll inside the app.
+   Safari can then collapse its address bar from a normal page swipe. */
+@media (max-width: 1023px), (hover: none) and (pointer: coarse) and (min-width: 769px) {
   html,
   body,
   #root {
@@ -183,13 +256,16 @@ input, textarea {
   }
 
   body {
-    overflow-x: hidden;
-    overflow-y: auto;
-    overscroll-behavior-y: auto;
+    min-height: 100svh;
   }
 
   .auth-shell {
     min-height: calc(100svh - env(safe-area-inset-top) - env(safe-area-inset-bottom));
+  }
+
+  .closed-shell {
+    min-height: calc(100svh - env(safe-area-inset-top) - env(safe-area-inset-bottom));
+    padding: 4.5rem 0.5rem 1rem;
   }
 
   .auth-suite-link {

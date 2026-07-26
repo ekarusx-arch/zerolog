@@ -4,6 +4,7 @@ import Layout from './components/Layout/Layout';
 import SuiteBackLink from './components/SuiteBackLink/SuiteBackLink';
 import Workspace from './components/Workspace/Workspace';
 import { supabase } from './lib/supabaseClient';
+import { exchangeSuiteCode, fetchZeroLogEntries, fetchZeroSlatePlan } from './lib/zeroSlateApi';
 
 const ZERO_SLATE_URL = 'https://zeroslate.kr';
 const isDevPreview = import.meta.env.DEV
@@ -27,12 +28,20 @@ function getSafeReturnUrl(rawUrl) {
   return ZERO_SLATE_URL;
 }
 
+function buildSuiteReturnUrl(rawUrl) {
+  const target = new URL(getSafeReturnUrl(rawUrl));
+  target.searchParams.set('from', 'log');
+  target.searchParams.set('suiteReturn', '1');
+  return target.toString();
+}
+
 function getSuiteContext() {
   const params = new URLSearchParams(window.location.search);
   const date = params.get('date');
 
   return {
-    returnUrl: getSafeReturnUrl(params.get('returnUrl') || params.get('return')),
+    suiteCode: params.get('suiteCode'),
+    returnUrl: buildSuiteReturnUrl(params.get('returnUrl') || params.get('return')),
     date: /^\d{4}-\d{2}-\d{2}$/.test(date || '') ? date : null,
   };
 }
@@ -59,6 +68,9 @@ function App() {
   ));
   const [logs, setLogs] = useState(() => (isDevPreview ? getPreviewLogs() : []));
   const [loading, setLoading] = useState(!isDevPreview);
+  const [planLoading, setPlanLoading] = useState(!isDevPreview);
+  const [isPro, setIsPro] = useState(isDevPreview);
+  const [errorMessage, setErrorMessage] = useState('');
   const [selectedDate, setSelectedDate] = useState(null);
   const [currentTab, setCurrentTab] = useState('write');
   const [calendarViewMode, setCalendarViewMode] = useState('monthly');
@@ -77,16 +89,63 @@ function App() {
   useEffect(() => {
     if (isDevPreview) return undefined;
 
-    supabase.auth.getSession().then(({ data: { session: nextSession } }) => {
-      setSession(nextSession);
-    });
+    let active = true;
+    let subscription;
 
-    const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, nextSession) => {
-      setSession(nextSession);
-    });
+    const initializeSession = async () => {
+      if (suiteContext.suiteCode) {
+        try {
+          const handoff = await exchangeSuiteCode(suiteContext.suiteCode);
+          await supabase.auth.setSession({
+            access_token: handoff.access_token,
+            refresh_token: handoff.refresh_token,
+          });
+          const cleanUrl = new URL(window.location.href);
+          cleanUrl.searchParams.delete('suiteCode');
+          window.history.replaceState({}, '', cleanUrl.toString());
+        } catch (error) {
+          console.warn('ZeroSlate Suite 자동 로그인에 실패했습니다:', error);
+        }
+      }
 
-    return () => subscription.unsubscribe();
-  }, []);
+      const { data: { session: nextSession } } = await supabase.auth.getSession();
+      if (active) setSession(nextSession);
+
+      const authState = supabase.auth.onAuthStateChange((_event, nextSessionState) => {
+        if (active) setSession(nextSessionState);
+      });
+      subscription = authState.data.subscription;
+    };
+
+    initializeSession();
+    return () => {
+      active = false;
+      subscription?.unsubscribe();
+    };
+  }, [suiteContext.suiteCode]);
+
+  useEffect(() => {
+    if (isDevPreview || !session?.access_token) {
+      setPlanLoading(false);
+      return;
+    }
+
+    let active = true;
+    setPlanLoading(true);
+    fetchZeroSlatePlan(session.access_token)
+      .then((data) => {
+        if (active) setIsPro(data?.plan === 'pro');
+      })
+      .catch((error) => {
+        console.warn('ZeroSlate Pro 권한 확인에 실패했습니다:', error);
+        if (active) setIsPro(false);
+      })
+      .finally(() => {
+        if (active) setPlanLoading(false);
+      });
+
+    return () => { active = false; };
+  }, [session?.access_token]);
 
   useEffect(() => {
     if (isDevPreview) return;
@@ -98,18 +157,18 @@ function App() {
 
     const fetchLogs = async () => {
       setLoading(true);
-      const { data, error } = await supabase
-        .from('zerolog_entries')
-        .select('*')
-        .order('created_at', { ascending: false });
-
-      if (!error && data) setLogs(data);
-      else if (error) console.error('Error fetching logs:', error);
+      try {
+        const data = await fetchZeroLogEntries(session.access_token);
+        if (data) setLogs(data);
+      } catch (error) {
+        console.error('Error fetching logs:', error);
+        setErrorMessage(error.message || '회고 기록을 불러오지 못했습니다.');
+      }
       setLoading(false);
     };
 
     fetchLogs();
-  }, [session?.user?.id]);
+  }, [session?.access_token, session?.user?.id]);
 
   useEffect(() => {
     const latestMood = logs[0]?.mood;
@@ -151,11 +210,33 @@ function App() {
           </div>
           <AuthScreen />
         </div>
+      ) : planLoading ? (
+        <div className="closed-shell">
+          <section className="closed-card" aria-live="polite">
+            <span className="closed-badge">ZeroSlate Pro</span>
+            <h1>Pro 권한을 확인하는 중입니다</h1>
+            <p>ZeroLog가 ZeroSlate 계정의 구독 상태를 확인하고 있습니다.</p>
+          </section>
+        </div>
+      ) : !isPro ? (
+        <div className="closed-shell">
+          <div className="auth-suite-link">
+            <SuiteBackLink href={suiteContext.returnUrl} />
+          </div>
+          <section className="closed-card" aria-live="polite">
+            <span className="closed-badge">Pro only</span>
+            <h1>ZeroLog는 ZeroSlate Pro 전용입니다</h1>
+            <p>ZeroSlate에서 Pro 권한이 확인되는 같은 계정으로 다시 열어주세요.</p>
+            <a className="closed-return" href={suiteContext.returnUrl}>ZeroSlate로 돌아가기</a>
+          </section>
+        </div>
       ) : (
         <Workspace
           bgTheme={bgTheme}
           calendarViewMode={calendarViewMode}
           currentTab={currentTab}
+          errorMessage={errorMessage}
+          isPro={isPro}
           loading={loading}
           logs={logs}
           onAddLog={handleAddLog}
@@ -168,6 +249,7 @@ function App() {
           setSelectedDate={setSelectedDate}
           suiteDate={suiteContext.date}
           user={session.user}
+          accessToken={session.access_token}
         />
       )}
     </Layout>

@@ -26,6 +26,8 @@ export default function Workspace({
   bgTheme,
   calendarViewMode,
   currentTab,
+  errorMessage,
+  isPro,
   loading,
   logs,
   onAddLog,
@@ -38,6 +40,7 @@ export default function Workspace({
   setSelectedDate,
   suiteDate,
   user,
+  accessToken,
 }) {
   const selectedLog = selectedDate
     ? logs.find((log) => log.date.startsWith(selectedDate))
@@ -48,9 +51,31 @@ export default function Workspace({
       <header className={styles.header}>
         <div className={styles.brandGroup}>
           <SuiteBackLink href={returnUrl} />
-          <div className={styles.brand}>
-            <span className={styles.brandMark} aria-hidden="true">Z</span>
-            <h1>ZeroLog</h1>
+          <div className={styles.titleCluster}>
+            <div className={styles.brand}>
+              <span className={styles.brandMark} aria-hidden="true">Z</span>
+              <h1>ZeroLog</h1>
+              {isPro && <span className={styles.proBadge}>PRO</span>}
+            </div>
+
+            {!selectedDate && (
+              <nav className={`${styles.tabs} ${styles.desktopTabs}`} aria-label="ZeroLog 보기 전환">
+                <WorkspaceTab
+                  active={currentTab === 'write'}
+                  icon={BookOpenText}
+                  onClick={() => setCurrentTab('write')}
+                >
+                  하루 회고
+                </WorkspaceTab>
+                <WorkspaceTab
+                  active={currentTab === 'calendar'}
+                  icon={CalendarDays}
+                  onClick={() => setCurrentTab('calendar')}
+                >
+                  회고 모아보기
+                </WorkspaceTab>
+              </nav>
+            )}
           </div>
         </div>
 
@@ -67,7 +92,7 @@ export default function Workspace({
       </header>
 
       {!selectedDate && (
-        <nav className={styles.tabs} aria-label="ZeroLog 보기 전환">
+        <nav className={`${styles.tabs} ${styles.mobileTabs}`} aria-label="ZeroLog 보기 전환">
           <WorkspaceTab
             active={currentTab === 'write'}
             icon={BookOpenText}
@@ -93,16 +118,17 @@ export default function Workspace({
       )}
 
       <main className={styles.workspace}>
+        {errorMessage && <div className={styles.loading} role="alert">{errorMessage}</div>}
         {loading && <div className={styles.loading}>기록을 불러오는 중...</div>}
 
         {!loading && selectedDate && (
           <div className={styles.dayView}>
-            <DayView
+              <DayView
               selectedDate={selectedDate}
               log={selectedLog}
               onBack={() => setSelectedDate(null)}
               onAddLog={onAddLog}
-              user={user}
+                user={user}
             />
           </div>
         )}
@@ -111,7 +137,7 @@ export default function Workspace({
           <div className={styles.writeGrid}>
             <div className={styles.primaryColumn}>
               <div className={styles.chatPanel}>
-                <ChatReflection onAddLog={onAddLog} user={user} entryDate={suiteDate} />
+                <ChatReflection accessToken={accessToken} onAddLog={onAddLog} user={user} entryDate={suiteDate} />
               </div>
               <RetrospectiveTopics />
             </div>

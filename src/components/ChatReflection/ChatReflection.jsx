@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import styles from './ChatReflection.module.css';
 import { GoogleGenerativeAI, HarmCategory, HarmBlockThreshold } from '@google/generative-ai';
-import { supabase } from '../../lib/supabaseClient';
+import { createZeroLogEntry } from '../../lib/zeroSlateApi';
 
 const SYSTEM_INSTRUCTION = `
 당신은 다정하고 공감 능력이 뛰어난 회고 파트너 '제로(Zero)'입니다.
@@ -22,7 +22,7 @@ const SUMMARY_PROMPT = `
 }
 `;
 
-const ChatReflection = ({ onAddLog, user, entryDate }) => {
+const ChatReflection = ({ accessToken, onAddLog, user, entryDate }) => {
   const [messages, setMessages] = useState([]);
   const [inputText, setInputText] = useState('');
   const [isTyping, setIsTyping] = useState(false);
@@ -126,20 +126,15 @@ const ChatReflection = ({ onAddLog, user, entryDate }) => {
         soundtrack: null
       };
 
-      const { data, error } = await supabase
-        .from('zerolog_entries')
-        .insert([newLogData])
-        .select()
-        .single();
-
-      if (error) {
-        console.error("Error saving log:", error);
-        setMessages(prev => [...prev, { role: 'model', text: "회고 기록 저장에 실패했습니다. 다시 시도해주세요." }]);
-      } else if (data) {
+      try {
+        const data = await createZeroLogEntry(accessToken, newLogData);
         setMessages(prev => [...prev, { role: 'model', text: "오늘의 회고가 깔끔하게 갈무리되었습니다! 우측 상단 탭에서 확인해보세요. ✨" }]);
         setTimeout(() => {
           onAddLog(data);
         }, 2000);
+      } catch (error) {
+        console.error("Error saving log:", error);
+        setMessages(prev => [...prev, { role: 'model', text: "회고 기록 저장에 실패했습니다. 다시 시도해주세요." }]);
       }
 
     } catch (error) {

@@ -22,4 +22,10 @@ export default defineConfig([
       'react-hooks/set-state-in-effect': 'off'
     }
   },
+  {
+    files: ['**/*.test.js'],
+    languageOptions: {
+      globals: globals.node,
+    },
+  },
 ])

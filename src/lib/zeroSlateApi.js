@@ -1,4 +1,4 @@
-const ZERO_SLATE_API_URL = (import.meta.env.VITE_ZERO_SLATE_API_URL || 'https://zeroslate.kr').replace(/\/$/, '');
+const ZERO_SLATE_API_URL = (import.meta.env?.VITE_ZERO_SLATE_API_URL || 'https://zeroslate.kr').replace(/\/$/, '');
 
 async function readResponse(response) {
   const payload = await response.json().catch(() => null);
@@ -9,16 +9,46 @@ async function readResponse(response) {
   return payload;
 }
 
-export async function exchangeSuiteCode(code) {
+export async function exchangeSuiteCode(code, { fetchImpl = fetch } = {}) {
   if (!code) return false;
 
-  const response = await fetch(`${ZERO_SLATE_API_URL}/api/auth/suite/exchange`, {
+  const response = await fetchImpl(`${ZERO_SLATE_API_URL}/api/auth/suite/exchange`, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({ code }),
   });
   const payload = await readResponse(response);
   return payload;
+}
+
+export function removeSuiteCodeFromUrl(locationHref) {
+  const nextUrl = new URL(locationHref);
+  nextUrl.searchParams.delete('suiteCode');
+  return nextUrl.toString();
+}
+
+export async function consumeSuiteLogin({
+  suiteCode,
+  supabaseAuth,
+  locationHref = window.location.href,
+  replaceUrl = (nextUrl) => window.history.replaceState({}, '', nextUrl),
+  fetchImpl,
+}) {
+  if (!suiteCode) return false;
+
+  replaceUrl(removeSuiteCodeFromUrl(locationHref));
+  const handoff = await exchangeSuiteCode(suiteCode, fetchImpl ? { fetchImpl } : undefined);
+
+  if (handoff?.token_hash && handoff?.type) {
+    const { error } = await supabaseAuth.verifyOtp({
+      token_hash: handoff.token_hash,
+      type: handoff.type,
+    });
+    if (error) throw error;
+    return true;
+  }
+
+  throw new Error('ZeroSlate 로그인 응답 형식을 해석하지 못했습니다. 다시 로그인해 주세요.');
 }
 
 async function requestEntries(accessToken, options = {}) {

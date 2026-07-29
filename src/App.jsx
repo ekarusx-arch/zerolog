@@ -4,7 +4,7 @@ import Layout from './components/Layout/Layout';
 import SuiteBackLink from './components/SuiteBackLink/SuiteBackLink';
 import Workspace from './components/Workspace/Workspace';
 import { supabase } from './lib/supabaseClient';
-import { exchangeSuiteCode, fetchZeroLogEntries, fetchZeroSlatePlan } from './lib/zeroSlateApi';
+import { consumeSuiteLogin, fetchZeroLogEntries, fetchZeroSlatePlan } from './lib/zeroSlateApi';
 
 const ZERO_SLATE_URL = 'https://zeroslate.kr';
 const isDevPreview = import.meta.env.DEV
@@ -95,14 +95,10 @@ function App() {
     const initializeSession = async () => {
       if (suiteContext.suiteCode) {
         try {
-          const handoff = await exchangeSuiteCode(suiteContext.suiteCode);
-          await supabase.auth.setSession({
-            access_token: handoff.access_token,
-            refresh_token: handoff.refresh_token,
+          await consumeSuiteLogin({
+            suiteCode: suiteContext.suiteCode,
+            supabaseAuth: supabase.auth,
           });
-          const cleanUrl = new URL(window.location.href);
-          cleanUrl.searchParams.delete('suiteCode');
-          window.history.replaceState({}, '', cleanUrl.toString());
         } catch (error) {
           console.warn('ZeroSlate Suite 자동 로그인에 실패했습니다:', error);
         }
